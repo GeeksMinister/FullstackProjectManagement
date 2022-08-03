@@ -16,7 +16,7 @@
     public string Email { get; set; } = string.Empty;
     [StringLength(20)]
     public string? City { get; set; }
-    public string[] Role { get; set; } = {"Employee"};
+    public string Role { get; set; } = "Employee";
     public byte[]? PasswordHash { get; set; }
     public byte[]? PasswordSalt { get; set; }
     [StringLength(512)]
@@ -25,10 +25,7 @@
     public DateTime? TokenExpires { get; set; }
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public IEnumerable<Todo>? Employee_Projects { get; set; }
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public IEnumerable<UserStory>? UserStories { get; set; }
-
+    public IEnumerable<Todo>? Todos { get; set; }
 
     public Employee() { }
 }

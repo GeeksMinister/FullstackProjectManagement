@@ -1,4 +1,4 @@
-﻿namespace Projekt_Avancerad.NET.Models.DTOs;
+﻿namespace DataAccessLibrary.DTOs;
 
 public class AuthenticatedUserModel
 {

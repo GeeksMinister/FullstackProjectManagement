@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLibrary", "DataAccessLibrary\DataAccessLibrary.csproj", "{B44BEC20-7266-4EB9-BEBF-2B41387704BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLibrary", "DataAccessLibrary\DataAccessLibrary.csproj", "{B44BEC20-7266-4EB9-BEBF-2B41387704BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullstackProjectManagement.API", "FullstackProjectManagement.API\FullstackProjectManagement.API.csproj", "{4E10AB62-A17F-4EC5-BF8D-0C04D525BD8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B44BEC20-7266-4EB9-BEBF-2B41387704BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B44BEC20-7266-4EB9-BEBF-2B41387704BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B44BEC20-7266-4EB9-BEBF-2B41387704BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E10AB62-A17F-4EC5-BF8D-0C04D525BD8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E10AB62-A17F-4EC5-BF8D-0C04D525BD8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E10AB62-A17F-4EC5-BF8D-0C04D525BD8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E10AB62-A17F-4EC5-BF8D-0C04D525BD8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
