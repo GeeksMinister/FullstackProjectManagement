@@ -1,16 +1,11 @@
-global using Microsoft.EntityFrameworkCore;
 using FullstackProjectManagement.API;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContextPool<ProjectManagementDbContext>(options =>
-{
-    options.UseSqlite(builder.Configuration.GetConnectionString("Default")!);
-});
 
-
-builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddSingleton<ISQLiteDataAccess, SQLiteDataAccess>();
+builder.Services.AddSingleton<IEmployeeData, EmployeeData>();
 
 var app = builder.Build();
 
