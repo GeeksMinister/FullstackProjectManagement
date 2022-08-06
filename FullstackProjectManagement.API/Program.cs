@@ -48,7 +48,7 @@ app.Run();
 
 void ConfigureApi(WebApplication app)
 {
-    app.ConfigureApiEmployee();
     app.ConfigureApiProject();
+    app.ConfigureApiEmployee();
     app.ConfigureApiUserStory();
 }

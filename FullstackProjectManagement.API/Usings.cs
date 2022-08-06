@@ -6,6 +6,7 @@ global using Microsoft.OpenApi.Models;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.Extensions.Hosting;
 global using Microsoft.AspNetCore.Builder;
+global using System.Security.Cryptography;
 global using Swashbuckle.AspNetCore.Filters;
 global using Microsoft.IdentityModel.Tokens;
 global using Microsoft.Extensions.Configuration;
