@@ -7,7 +7,7 @@ global using System.Collections;
 global using System.ComponentModel;
 global using System.Threading.Tasks;
 global using System.Collections.Generic;
+global using System.Text.Json.Serialization;
 global using Microsoft.Extensions.Configuration;
 global using System.ComponentModel.DataAnnotations;
-global using System.Text.Json.Serialization;
 global using System.ComponentModel.DataAnnotations.Schema;

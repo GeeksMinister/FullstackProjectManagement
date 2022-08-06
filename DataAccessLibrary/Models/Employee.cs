@@ -9,6 +9,7 @@
     [StringLength(10)]
     public string Birthdate { get; set; } = DateTime.Now.ToShortDateString();
     [StringLength(50)]
+    [Phone]
     [Range(0, Int64.MaxValue, ErrorMessage = "Contact number should not contain characters")]
     public string Phone { get; set; } = string.Empty;
     [EmailAddress]
