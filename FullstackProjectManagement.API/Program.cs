@@ -26,13 +26,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAutoMapper(typeof(MapperInitializer));
 builder.Services.AddAuthorization();
 
 builder.Services.AddSingleton<ISQLiteDataAccess, SQLiteDataAccess>();
 builder.Services.AddSingleton<IUserStoryData, UserStoryData>();
 builder.Services.AddSingleton<IEmployeeData, EmployeeData>();
+builder.Services.AddSingleton<ICurrencyData, CurrencyData>();
 builder.Services.AddSingleton<IProjectData, ProjectData>();
+builder.Services.AddAutoMapper(typeof(MapperInitializer));
 
 var app = builder.Build();
 
@@ -50,9 +51,8 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-
-
 app.Run();
+
 
 
 void ConfigureApi(WebApplication app)

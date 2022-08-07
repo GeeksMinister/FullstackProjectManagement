@@ -5,7 +5,9 @@ VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLibrary", "DataAccessLibrary\DataAccessLibrary.csproj", "{B44BEC20-7266-4EB9-BEBF-2B41387704BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullstackProjectManagement.API", "FullstackProjectManagement.API\FullstackProjectManagement.API.csproj", "{4E10AB62-A17F-4EC5-BF8D-0C04D525BD8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullstackProjectManagement.API", "FullstackProjectManagement.API\FullstackProjectManagement.API.csproj", "{4E10AB62-A17F-4EC5-BF8D-0C04D525BD8E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullstackProjectManagement.Server", "FullstackProjectManagement.Server\FullstackProjectManagement.Server.csproj", "{6F27FA00-27FC-4B6C-8D6B-1FB226600BBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4E10AB62-A17F-4EC5-BF8D-0C04D525BD8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E10AB62-A17F-4EC5-BF8D-0C04D525BD8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E10AB62-A17F-4EC5-BF8D-0C04D525BD8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F27FA00-27FC-4B6C-8D6B-1FB226600BBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F27FA00-27FC-4B6C-8D6B-1FB226600BBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F27FA00-27FC-4B6C-8D6B-1FB226600BBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F27FA00-27FC-4B6C-8D6B-1FB226600BBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

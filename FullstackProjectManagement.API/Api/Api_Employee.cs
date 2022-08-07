@@ -8,6 +8,7 @@
         app.MapPost("/Employee", InsertEmployee);
         app.MapPut("Employee", UpdateEmployee);
         app.MapDelete("/Employee", DeleteEmployee);
+        app.MapGet("ExchangeRates", GetAllCurrencies);
     }
 
     private static async Task<IResult> Login(string loginInfo, string password, IConfiguration config, IEmployeeData data, HttpContext http)
@@ -123,6 +124,19 @@
             if(employee == null) return Results.NotFound();
             await data.DeleteEmployee(id);
             return Results.Ok($"Employee with Id: {id} Was successfully removed");
+        }
+        catch (Exception ex)
+        {
+            return Results.Problem(ex.Message);
+        }
+    }
+
+    private static async Task<IResult> GetAllCurrencies(ICurrencyData data)
+    {
+        try
+        {
+            var result = await data.GetAllCurrencies();
+            return Results.Ok(result);
         }
         catch (Exception ex)
         {

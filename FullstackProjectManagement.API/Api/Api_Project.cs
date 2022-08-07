@@ -2,11 +2,11 @@
 {
     public static void ConfigureApiProject(this WebApplication app)
     {
-        app.MapGet("/Project", GetAllProjects);
         app.MapGet("/Project{id}", GetProjectById);
+        app.MapGet("/Project", GetAllProjects);
+        app.MapPost("/Project", InsertProject);
         app.MapPut("/Project", UpdateProject);
         app.MapDelete("/Project", DeleteProject);
-        app.MapPost("/Project", InsertProject);
     }
 
     private static async Task<IResult> GetAllProjects(IProjectData data, HttpContext context)

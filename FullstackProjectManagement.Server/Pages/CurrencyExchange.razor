@@ -1,0 +1,126 @@
+﻿@page "/CurrencyExchange";
+@inject IHttpClientFactory _clientFactory;
+@inject IConfiguration _config;
+@inject ICurrencyData _data
+
+<PageTitle>Exchange Rates</PageTitle>
+
+<div class="container">
+    <div class="row pt-3">
+        <div class="col-4 mt-3">
+            <h4 class="text-primary fw-bold">Forex Exchange Rates</h4>
+        </div>
+        <div class="col text-end mt-3">
+            <div class="col">
+                <a class="btn btn-secondary m-auto " href="https://www.currencyconverterapi.com/server-status" target="_blank">Server Status </a>
+                <button class="btn btn-primary mx-3" onclick="@(async () => await UpdateExchangeRates())">Update</button>
+            </div>
+        </div>
+    </div>
+    @if (error is not null)
+    {
+        <p>@error</p>
+    }
+    @if (currencies?.Any() == false)
+    {
+        <div class="h3 m-5"><em>Loading.......</em></div>
+    }
+    else
+    {
+        <div class="pt-4">
+            <p class="text-end col-11 font-monospace fw-bold text-primary bg-opacity-100">Price Updated: @currencies?[0].UpdateDate</p>
+            @foreach (var currency in currencies!)
+            {
+                 
+                <table class="table table-bordered table-striped text-center border-dark">
+                    <thead class="border-2 table-dark">
+                        <tr>
+                            <th>@currency.CurrencyName</th>
+                            <th>Exchange Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody class="border-1">
+                        <tr>
+                            <td>USD</td>
+                            <td>@currency.USD</td>
+                        </tr>
+                        <tr>
+                            <td>EUR</td>
+                            <td>@currency.EUR</td>
+                        </tr>
+                        <tr>
+                            <td>GBP</td>
+                            <td>@currency.GBP</td>
+                        </tr>
+                        <tr>
+                            <td>CAD</td>
+                            <td>@currency.CAD</td>
+                        </tr>
+                        <tr>
+                            <td>CHF</td>
+                            <td>@currency.CHF</td>
+                        </tr>
+                        <tr>
+                            <td>JPY</td>
+                            <td>@currency.JPY</td>
+                        </tr>
+                    </tbody>
+                </table>
+                index  += 1;
+            }
+
+        </div>
+    }
+
+</div>
+@code {
+    List<Currency>? currencies = new List<Currency>();
+    int index;
+    string? error;
+    protected override async Task OnInitializedAsync()
+    {
+        await PrintExchangeRates();
+    }
+
+    private async Task PrintExchangeRates()
+    {
+        try
+        {
+            string filePath = _config.GetValue<string>("CurrencyConverterAPI:FilePath");
+            var currencyFile = await File.ReadAllTextAsync(filePath);
+            currencies = JsonSerializer.Deserialize<IEnumerable<Currency>>(currencyFile)?.ToList();
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+
+        }
+    }
+
+    private string[] GenerateLinks()
+    {
+        var apiKey = _config.GetValue<string>("CurrencyConverterAPI:FreeKey");
+        return new[]
+        {
+            _config.GetValue<string>("CurrencyConverterAPI:USD_SEK,EUR_SEK") + apiKey,
+            _config.GetValue<string>("CurrencyConverterAPI:GBP_SEK,CAD_SEK") + apiKey,
+            _config.GetValue<string>("CurrencyConverterAPI:CHF_SEK,JPY_SEK") + apiKey,
+        };
+    }
+
+    private async Task UpdateExchangeRates()
+    {
+        string filePath = _config.GetValue<string>("CurrencyConverterAPI:FilePath");
+        string[] requestLinks = GenerateLinks();
+        var client = _clientFactory.CreateClient();
+
+        JObject currency_json = JObject.Parse($"{{ \"updated\": \"{DateTime.Now}\"}}");
+        currency_json.Merge((JObject.Parse(await client.GetStringAsync(GenerateLinks()[0]))));
+        currency_json.Merge((JObject.Parse(await client.GetStringAsync(GenerateLinks()[1]))));
+        currency_json.Merge((JObject.Parse(await client.GetStringAsync(GenerateLinks()[2]))));
+        await File.WriteAllTextAsync(filePath, $"[\n{currency_json}\n]");
+
+        await PrintExchangeRates();
+    }
+
+}
