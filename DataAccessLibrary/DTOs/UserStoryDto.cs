@@ -11,7 +11,7 @@
     public int? Priority { get; set; } = null;
     [StringLength(12)]
     public string Status { get; set; } = "Not Started";
-
     [StringLength(36)]
     public string ProjectId { get; set; } = string.Empty;
+
 }

@@ -10,7 +10,7 @@
         app.MapDelete("/Employee", DeleteEmployee);
     }
 
-    private static async Task<IResult> Login(string loginInfo, string password, IEmployeeData data)
+    private static async Task<IResult> Login(string loginInfo, string password, IConfiguration config, IEmployeeData data, HttpContext http)
     {
         try
         {
@@ -22,7 +22,14 @@
             {
                 return Results.BadRequest("Wrong Password");
             }
-            return Results.Ok($"Successful Login!  Welcome {employee.FirstName} {employee.LastName}");
+            var authenticatedUser = new AuthenticatedUserModel
+            {
+                UserName = $"{employee.FirstName} {employee.LastName}",
+                Email = employee.Email,
+                Access_Token = CreateToken(employee, config)
+            };
+            SetRefreshToken(new RefreshToken(), http);
+            return Results.Ok(authenticatedUser);
         }
         catch (Exception ex)
         {
@@ -30,7 +37,20 @@
         }
     }
 
-    //[Authorize]
+    private static void SetRefreshToken(/*Employee employee, */RefreshToken refreshToken, HttpContext http)
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Expires = refreshToken.Expires
+        };
+        http.Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);
+        //employee.RefreshToken = refreshToken.Token;
+        //employee.TokenCreated = refreshToken.Created;
+        //employee.TokenExpires = refreshToken.Expires;
+    }
+
+    //[Authorize(Roles = "Construction Manager, Estimator")]
     private static async Task<IResult> GetAllEmployees(IEmployeeData data, HttpContext context)
     {
         try
@@ -61,21 +81,32 @@
         }
     }
 
-    private static async Task<IResult> InsertEmployee(EmployeeDto employeeDto, IEmployeeData data)
+    private static async Task<IResult> InsertEmployee(EmployeeDto employeeDto, IEmployeeData data, IMapper mapper)
     {
         try
         {
             if(employeeDto == null) return Results.BadRequest();
-            var employee = new Employee();
-            employee.FirstName = employeeDto.FirstName;
-            employee.LastName = employeeDto.LastName;
-            employee.Birthdate = employeeDto.Birthdate;
-            employee.Email = employeeDto.Email;
-            employee.Phone = employeeDto.Phone;
-            employee.City = employeeDto.City;
-            employee.Role = employeeDto.Role;
+            var employee = mapper.Map<Employee>(employeeDto);
             (employee.PasswordSalt, employee.PasswordHash) = CreatePasswordHash(employeeDto.Password);
             await data.InsertEmployee(employee);
+            return Results.Ok(employee);
+        }
+        catch (Exception ex)
+        {
+            return Results.Problem(ex.Message);
+        }
+    }
+
+    private static async Task<IResult> UpdateEmployee(string id, EmployeeDto employeeDto, IEmployeeData data, IMapper mapper)
+    {
+        try
+        {
+            var employee = await data.GetEmployeeById(id);
+            if (employee == null) return Results.NotFound();
+            employee = mapper.Map<Employee>(employeeDto);
+            employee.Id = id;
+            (employee.PasswordSalt, employee.PasswordHash) = CreatePasswordHash(employeeDto.Password);
+            await data.UpdateEmployee(employee);
             return Results.Ok(employee);
         }
         catch (Exception ex)
@@ -92,28 +123,6 @@
             if(employee == null) return Results.NotFound();
             await data.DeleteEmployee(id);
             return Results.Ok($"Employee with Id: {id} Was successfully removed");
-        }
-        catch (Exception ex)
-        {
-            return Results.Problem(ex.Message);
-        }
-    }
-
-    private static async Task<IResult> UpdateEmployee(string id, EmployeeDto employeeDto, IEmployeeData data)
-    {
-        try
-        {
-            var employee = await data.GetEmployeeById(id);
-            if (employee == null) return Results.NotFound();
-            employee.FirstName = employeeDto.FirstName;
-            employee.LastName = employeeDto.LastName;
-            employee.Birthdate = employeeDto.Birthdate;
-            employee.Email = employeeDto.Email;
-            employee.Phone = employeeDto.Phone;
-            employee.City = employeeDto.City;
-            employee.Role = employeeDto.Role;
-            await data.UpdateEmployee(employee);
-            return Results.Ok(employee);
         }
         catch (Exception ex)
         {
@@ -143,6 +152,26 @@
         return (passwordSalt: Convert.FromHexString(saltHex), passwordHash: Convert.FromHexString(passwordHex));
     }
 
+    private static string CreateToken(Employee employee, IConfiguration config)
+    {
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, employee.Username()),
+            new Claim(ClaimTypes.SerialNumber, employee.Id),
+            new Claim(ClaimTypes.Role, employee.Role),
+            new Claim(ClaimTypes.Email, employee.Email)
+        };
 
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+            config.GetValue<string>("AppSettings:SigningKey")));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
+
+        var token = new JwtSecurityToken(
+            claims: claims,
+            signingCredentials: creds,
+            expires: DateTime.Now.AddDays(1));
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
 
 }

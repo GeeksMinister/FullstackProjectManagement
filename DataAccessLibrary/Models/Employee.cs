@@ -34,4 +34,6 @@
     public IEnumerable<Todo>? Todos { get; set; }
 
     public Employee() { }
+
+    public string Username() => FirstName + " " + LastName;
 }
