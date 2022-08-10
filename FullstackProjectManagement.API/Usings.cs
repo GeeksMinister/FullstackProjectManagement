@@ -5,6 +5,7 @@ global using System.Text;
 global using System.Threading.Tasks;
 global using System.Security.Claims;
 global using Microsoft.OpenApi.Models;
+global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Http;
 global using System.Collections.Generic;
 global using Microsoft.Extensions.Hosting;

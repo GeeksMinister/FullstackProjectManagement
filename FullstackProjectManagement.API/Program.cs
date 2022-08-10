@@ -1,5 +1,12 @@
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddCors(policy =>
+{
+    policy.AddPolicy("OpenCorsPolicy", opt =>
+    opt.AllowAnyOrigin()
+    .AllowAnyHeader()
+    .AllowAnyMethod());
+});
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -20,7 +27,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-            .GetBytes(builder.Configuration.GetValue<string>("AppSettings:SigningKey"))),
+            .GetBytes(builder.Configuration.GetValue<string>("JwtSettings:SigningKey"))),
             ValidateIssuer = false,
             ValidateAudience = false
         };
@@ -46,6 +53,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 ConfigureApi(app);
+
+//app.UseCors("OpenCorsPolicy");
 
 app.UseAuthentication();
 

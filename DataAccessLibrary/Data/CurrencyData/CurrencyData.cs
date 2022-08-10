@@ -13,12 +13,18 @@
         return await _dbContext.LoadData<Currency, object>("SELECT * FROM ExchangeRates", new { });
     }
 
+    public async Task<Currency> GetCurrencyById(int id)
+    {
+        string query = "SELECT * FROM ExchangeRates WHERE Id = @Id";
+        var result = await _dbContext.LoadData<Currency, object>(query, new { Id = id });
+        return result.FirstOrDefault()!;
+    }
+
     public async Task<Currency> UpdateCurrency(int id, Currency currency)
     {
         string query = "UPDATE ExchangeRates SET CurrencyName = @CurrencyName, USD = @USD, EUR = @EUR, GBP = @GBP," +
-                                                "CAD = @CAD, CHF = @CHF, JPY = @JPY, UpdateDate = @UpdateDate";
-        currency.Id = id;
-        var result = await _dbContext.LoadData<Currency, object>(query, new { currency });
+                                    "CAD = @CAD, CHF = @CHF, JPY = @JPY, UpdateDate = @UpdateDate WHERE Id = @Id";
+        var result = await _dbContext.LoadData<Currency, object>(query, currency);
         return result.FirstOrDefault()!;
     }
 }

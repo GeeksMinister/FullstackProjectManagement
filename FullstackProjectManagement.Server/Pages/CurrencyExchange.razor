@@ -1,7 +1,7 @@
 ﻿@page "/CurrencyExchange";
 @inject IHttpClientFactory _clientFactory;
 @inject IConfiguration _config;
-@inject ICurrencyData _data
+@inject ICurrencyClientData _currencyClient
 
 <PageTitle>Exchange Rates</PageTitle>
 
@@ -13,7 +13,7 @@
         <div class="col text-end mt-3">
             <div class="col">
                 <a class="btn btn-secondary m-auto " href="https://www.currencyconverterapi.com/server-status" target="_blank">Server Status </a>
-                <button class="btn btn-primary mx-3" onclick="@(async () => await UpdateExchangeRates())">Update</button>
+                <button class="btn btn-primary mx-3" @onclick="@(async () => await UpdateExchangeRates())">Update</button>
             </div>
         </div>
     </div>
@@ -28,9 +28,9 @@
     else
     {
         <div class="pt-4">
-            <p class="text-end col-11 font-monospace fw-bold text-primary bg-opacity-100">Price Updated: @currencies?[0].UpdateDate</p>
             @foreach (var currency in currencies!)
             {
+            <p class="text-end col-11 font-monospace fw-bold text-primary bg-opacity-100">[@currency.CurrencyName] Updated: @currency.UpdateDate</p>
                  
                 <table class="table table-bordered table-striped text-center border-dark">
                     <thead class="border-2 table-dark">
@@ -66,7 +66,8 @@
                         </tr>
                     </tbody>
                 </table>
-                index  += 1;
+                index = currencies.IndexOf(currency);
+                <br />
             }
 
         </div>
@@ -74,27 +75,46 @@
 
 </div>
 @code {
-    List<Currency>? currencies = new List<Currency>();
+    private List<Currency>? currencies = new List<Currency>();
     int index;
     string? error;
     protected override async Task OnInitializedAsync()
     {
         await PrintExchangeRates();
+
     }
 
     private async Task PrintExchangeRates()
     {
         try
         {
-            string filePath = _config.GetValue<string>("CurrencyConverterAPI:FilePath");
-            var currencyFile = await File.ReadAllTextAsync(filePath);
-            currencies = JsonSerializer.Deserialize<IEnumerable<Currency>>(currencyFile)?.ToList();
+            var currencyData = RestService.For<ICurrencyClientData>("https://localhost:7128");
+            var result = await currencyData.GetAllCurrencies();
+            currencies = result.ToList();
         }
         catch (Exception ex)
         {
             error = ex.Message;
-
         }
+    }
+
+    private async Task UpdateExchangeRates()
+    {
+        try
+        {
+            var json = await RequestUpdatedPrice();
+            Currency? currency = JsonSerializer.Deserialize<Currency>(json.ToString());
+            if (currency is null) return;
+            var apiKey = _config.GetValue<string>("CurrencyConverterAPI:ApiKey");
+            var result = await _currencyClient.UpdateCurrency(apiKey, currency);
+            currencies![0] = result;
+            await PrintExchangeRates();
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+        }
+
     }
 
     private string[] GenerateLinks()
@@ -108,19 +128,17 @@
         };
     }
 
-    private async Task UpdateExchangeRates()
+    private async Task<JObject> RequestUpdatedPrice()
     {
-        string filePath = _config.GetValue<string>("CurrencyConverterAPI:FilePath");
         string[] requestLinks = GenerateLinks();
         var client = _clientFactory.CreateClient();
-
         JObject currency_json = JObject.Parse($"{{ \"updated\": \"{DateTime.Now}\"}}");
+        currency_json.Merge((JObject.Parse($"{{ \"CurrencyName\": \"{currencies?[0].CurrencyName}\"}}")));
         currency_json.Merge((JObject.Parse(await client.GetStringAsync(GenerateLinks()[0]))));
         currency_json.Merge((JObject.Parse(await client.GetStringAsync(GenerateLinks()[1]))));
         currency_json.Merge((JObject.Parse(await client.GetStringAsync(GenerateLinks()[2]))));
-        await File.WriteAllTextAsync(filePath, $"[\n{currency_json}\n]");
-
-        await PrintExchangeRates();
+        return currency_json;
     }
+
 
 }

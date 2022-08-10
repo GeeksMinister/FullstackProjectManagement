@@ -1,14 +1,16 @@
 ﻿public static class Api_Employee
 {
+
     public static void ConfigureApiEmployee(this WebApplication app)
     {
-        app.MapGet("/Employee", GetAllEmployees);
         app.MapPost("/Login", Login);
+        app.MapGet("/Employee", GetAllEmployees);
         app.MapGet("/Employee/{id}", GetEmployeeById);
         app.MapPost("/Employee", InsertEmployee);
-        app.MapPut("Employee", UpdateEmployee);
+        app.MapPut("/Employee", UpdateEmployee);
         app.MapDelete("/Employee", DeleteEmployee);
-        app.MapGet("ExchangeRates", GetAllCurrencies);
+        app.MapGet("/ExchangeRates", GetAllCurrencies);
+        app.MapPut("/ExchangeRates", UpdateCurrency);
     }
 
     private static async Task<IResult> Login(string loginInfo, string password, IConfiguration config, IEmployeeData data, HttpContext http)
@@ -73,7 +75,7 @@
         try
         {
             var result = await data.GetEmployeeById(id);
-            if(result is null) return Results.NotFound();
+            if (result is null) return Results.NotFound();
             return Results.Ok(result);
         }
         catch (Exception ex)
@@ -86,7 +88,7 @@
     {
         try
         {
-            if(employeeDto == null) return Results.BadRequest();
+            if (employeeDto == null) return Results.BadRequest();
             var employee = mapper.Map<Employee>(employeeDto);
             (employee.PasswordSalt, employee.PasswordHash) = CreatePasswordHash(employeeDto.Password);
             await data.InsertEmployee(employee);
@@ -121,7 +123,7 @@
         try
         {
             var employee = await data.GetEmployeeById(id);
-            if(employee == null) return Results.NotFound();
+            if (employee == null) return Results.NotFound();
             await data.DeleteEmployee(id);
             return Results.Ok($"Employee with Id: {id} Was successfully removed");
         }
@@ -137,6 +139,26 @@
         {
             var result = await data.GetAllCurrencies();
             return Results.Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return Results.Problem(ex.Message);
+        }
+    }
+
+    private static async Task<IResult> UpdateCurrency([FromHeader(Name = "Key")] string apiKey,
+                        int id, CurrencyDto currencyDto, ICurrencyData data, IMapper mapper, IConfiguration config)
+    {
+        try
+        {
+            string MyApiKey = config.GetValue<string>("ApiKey");
+            if (apiKey.Equals(MyApiKey) == false) return Results.Unauthorized();
+            var currency = await data.GetCurrencyById(id);
+            if (currency == null) return Results.NotFound();
+            currency = mapper.Map<Currency>(currencyDto);
+            currency.Id = id;
+            await data.UpdateCurrency(id, currency);
+            return Results.Ok(currency);
         }
         catch (Exception ex)
         {
@@ -177,7 +199,7 @@
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-            config.GetValue<string>("AppSettings:SigningKey")));
+            config.GetValue<string>("JwtSettings:SigningKey")));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
         var token = new JwtSecurityToken(
