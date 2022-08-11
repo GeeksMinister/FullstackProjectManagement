@@ -62,3 +62,8 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.table-details {
+    border-collapse: separate;
+    border-spacing: 3px;
+}

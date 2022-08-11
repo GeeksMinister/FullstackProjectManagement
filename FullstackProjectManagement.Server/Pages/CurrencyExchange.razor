@@ -1,6 +1,6 @@
-﻿@page "/CurrencyExchange";
-@inject IHttpClientFactory _clientFactory;
-@inject IConfiguration _config;
+﻿@page "/CurrencyExchange"
+@inject IHttpClientFactory _clientFactory
+@inject IConfiguration _config
 @inject ICurrencyClientData _currencyClient
 
 <PageTitle>Exchange Rates</PageTitle>
@@ -78,6 +78,7 @@
     private List<Currency>? currencies = new List<Currency>();
     int index;
     string? error;
+
     protected override async Task OnInitializedAsync()
     {
         await PrintExchangeRates();
@@ -110,9 +111,9 @@
             currencies![0] = result;
             await PrintExchangeRates();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            error = ex.Message;
+            error = "Failed to request an update!  Check the server status";
         }
 
     }
@@ -134,9 +135,9 @@
         var client = _clientFactory.CreateClient();
         JObject currency_json = JObject.Parse($"{{ \"updated\": \"{DateTime.Now}\"}}");
         currency_json.Merge((JObject.Parse($"{{ \"CurrencyName\": \"{currencies?[0].CurrencyName}\"}}")));
-        currency_json.Merge((JObject.Parse(await client.GetStringAsync(GenerateLinks()[0]))));
-        currency_json.Merge((JObject.Parse(await client.GetStringAsync(GenerateLinks()[1]))));
-        currency_json.Merge((JObject.Parse(await client.GetStringAsync(GenerateLinks()[2]))));
+        currency_json.Merge((JObject.Parse(await client.GetStringAsync(requestLinks[0]))));
+        currency_json.Merge((JObject.Parse(await client.GetStringAsync(requestLinks[1]))));
+        currency_json.Merge((JObject.Parse(await client.GetStringAsync(requestLinks[2]))));
         return currency_json;
     }
 

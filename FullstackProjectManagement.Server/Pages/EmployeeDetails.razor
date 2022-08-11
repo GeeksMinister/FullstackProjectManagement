@@ -1,0 +1,80 @@
+﻿@page "/employee/employeedetails/{id}"
+@inject IEmployeeClientData _data
+
+    <PageTitle>Employee - Details</PageTitle>
+
+@if (employee is null)
+{
+    <p>No Employee Was Found or Returned From Database</p>
+}
+else
+{
+    <table class="table table-striped table-details">
+        <tbody class="border-5 fw-bold text-center">
+
+            <tr class="border-3">
+                <th class="table-dark">Id</th>
+                <td>@employee.Id</td>
+            </tr>
+
+            <tr class="border-3">
+                <th class="table-dark">Employee</th>
+                <td>@employee.Username()</td>
+            </tr>
+
+            <tr class="border-3">
+                <th class="table-dark">Phone</th>
+                <td>@employee.Phone</td>
+            </tr>
+
+            <tr class="border-3">
+                <th class="table-dark">Email</th>
+                <td>@employee.Email</td>
+            </tr>
+
+            <tr class="border-3">
+                <th class="table-dark">City</th>
+                <td>@employee.City</td>
+            </tr>
+
+            <tr class="border-3">
+                <th class="table-dark">Birthdate</th>
+                <td>@employee.Birthdate</td>
+            </tr>
+
+            <tr class="border-3">
+                <th class="table-dark">Role</th>
+                <td>@employee.Role</td>
+            </tr>
+
+            <tr class="">
+                <th class="table-dark">Tasks</th>
+                <td>
+                    <a href="" class="btn btn-primary btn-outline-info p pe-4 ps-4">@tasksCount</a>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <div class="row-cols-6 m-5 text-center">
+        <a class="btn btn-primary p-2 m-3">Update</a>
+        <a class="btn btn-danger p-2 m-3">Delete</a>
+        <a href="employees" class="btn btn-info p-2 m-3">Back</a>
+    </div>
+
+}
+
+@code{
+    Employee? employee;
+    int? tasksCount = null;
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        employee = await _data.GetEmployeeById(Id);
+        tasksCount = employee?.Todos?.Count();
+        tasksCount ??= 0;
+    }
+}

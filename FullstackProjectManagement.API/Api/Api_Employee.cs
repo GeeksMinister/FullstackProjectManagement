@@ -10,7 +10,7 @@
         app.MapPut("/Employee", UpdateEmployee);
         app.MapDelete("/Employee", DeleteEmployee);
         app.MapGet("/ExchangeRates", GetAllCurrencies);
-        app.MapPut("/ExchangeRates", UpdateCurrency);
+        app.MapPut("/ExchangeRates/{id}", UpdateCurrency);
     }
 
     private static async Task<IResult> Login(string loginInfo, string password, IConfiguration config, IEmployeeData data, HttpContext http)

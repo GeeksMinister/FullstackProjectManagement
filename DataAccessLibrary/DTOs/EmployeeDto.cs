@@ -5,7 +5,7 @@
     [StringLength(50)]
     public string LastName { get; set; } = string.Empty;
     [StringLength(10)]
-    public string Birthdate { get; set; } = DateTime.Now.ToShortDateString();
+    public string Birthdate { get; set; } = DateTime.Now.AddYears(-18).ToShortDateString();
     [StringLength(20)]
     public string? City { get; set; }
     public string Role { get; set; } = "Employee";

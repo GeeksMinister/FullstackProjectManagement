@@ -1,0 +1,43 @@
+﻿@page "/addemployee"
+@inject IEmployeeClientData _data
+
+
+<h3>AddEmployee</h3>
+
+<EditForm Model="employeeDto" OnValidSubmit="@InsertEmployee">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText id="firstName" @bind-Value="employeeDto.FirstName" />
+    <InputText id="LastName" @bind-Value="employeeDto.LastName" />
+    <InputText id="birthdate" @bind-Value="employeeDto.Birthdate" />
+    <InputText id="city" @bind-Value="employeeDto.City" />
+    <InputText id="email" @bind-Value="employeeDto.Email" />
+    <InputText id="phone" @bind-Value="employeeDto.Phone" />
+    <InputText id="password" type="password" @bind-Value="employeeDto.Password" />
+    <InputSelect id="role" @bind-Value="employeeDto.Role">
+        <option value="">Select classification ...</option>
+        <option value="Exploration">Exploration</option>
+        <option value="Diplomacy">Diplomacy</option>
+        <option value="Defense">Defense</option>
+    </InputSelect>
+
+    <br />
+    <br />
+    <div class="w-75 m-5 text-center d-flex justify-content-evenly">
+        <button type="submit" class="btn btn-primary p-2 m-2 col-2">Add Employee</button>
+        <button type="reset" class="btn btn-secondary p-2 m-2 col-2">Reset</button>
+        <a href="employees" class="btn btn-info p-2 m-2 col-2">Cancel</a>
+    </div>
+
+</EditForm>
+
+
+@code {
+    EmployeeDto employeeDto = new EmployeeDto();
+
+    private async Task InsertEmployee()
+    {
+        await _data.InsertEmployee(employeeDto);
+    }
+}

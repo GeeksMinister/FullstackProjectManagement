@@ -52,21 +52,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-ConfigureApi(app);
+app.ConfigureApiProject();
+app.ConfigureApiUserStory();
+app.ConfigureApiEmployee();
 
-//app.UseCors("OpenCorsPolicy");
+//app.UseCors("OpenCorsPolicy");   
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.Run();
-
-
-
-void ConfigureApi(WebApplication app)
-{
-    app.ConfigureApiProject();
-    app.ConfigureApiEmployee();
-    app.ConfigureApiUserStory();
-}

@@ -1,6 +1,4 @@
-﻿using Refit;
-
-public interface ICurrencyClientData
+﻿public interface ICurrencyClientData
 {
     [Get("/ExchangeRates")]
     Task<IEnumerable<Currency>> GetAllCurrencies();

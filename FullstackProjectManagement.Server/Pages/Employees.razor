@@ -1,0 +1,78 @@
+﻿@page "/employees"
+@inject IEmployeeClientData _data;
+
+<PageTitle>Employees</PageTitle>
+
+<h3 class="text-primary">Registered Employees <span class="small">(@employees.Count)</span></h3>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class=" text-end">
+            <a href="addemployee" class="btn btn-primary">New Employee</a>
+        </div>
+    </div>
+    <br />
+    @if (employees.Any() == false)
+    {
+        <p>No Employee Was Found or Returned From Database</p>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr class="border-5">
+                    <th class="text-center">
+                        Employee
+                    </th>
+                    <th class="text-center">
+                        Email
+                    </th>
+                    <th class="text-center">
+                        City
+                    </th>
+                    <th class="text-center">
+                        Birthdate
+                    </th>
+                    <th class="text-center">
+                        Role
+                    </th>
+                    <th class="text-center">
+                        Changes
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var employee in employees)
+                {
+                    <tr class="border-5">
+                        <td class="col-3 align-middle text-lg-center fw-bold">@employee.Username()</td>
+                        <td class="col-9 text-sm-center">@employee.Email</td>
+                        <td class="col-1 text-sm-center align-middle">@employee.City</td>
+                        <td class="col-1 text-sm-center align-middle">@employee.Birthdate</td>
+                        <td class="col-1 text-sm-center align-middle">@employee.Role</td>
+                        <td>
+                            <div class="text-center">
+                                <a href="@($"/employee/employeedetails/{@employee.Id}")" class="btn btn-secondary p-1 m-1 ">Details</a>
+                                <a class="btn btn-primary p-1 ">Update</a>
+                                <a class="btn btn-danger p-1 mt-1">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+
+@code {
+    List<Employee> employees = new List<Employee>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await _data.GetAllEmployees();
+        employees = result.ToList();
+    }
+
+
+}
