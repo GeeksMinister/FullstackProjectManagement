@@ -7,7 +7,8 @@
     [StringLength(50)]
     public string LastName { get; set; } = string.Empty;
     [StringLength(10)]
-    public string Birthdate { get; set; } = DateTime.Now.AddYears(-18).ToShortDateString();
+    [FromNow]
+    public DateTime Birthdate { get; set; }
     [StringLength(50)]
     [Phone]
     [Range(0, Int64.MaxValue, ErrorMessage = "Contact number should not contain characters")]
