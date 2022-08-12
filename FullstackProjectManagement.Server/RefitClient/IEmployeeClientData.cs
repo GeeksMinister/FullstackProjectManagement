@@ -8,6 +8,13 @@
 
     [Post("/Employee")]
     Task<Employee> InsertEmployee(EmployeeDto employeeDto);
+
+    [Put("/Employee/{id}")]
+    Task UpdateEmployee(string id, EmployeeDto employeeDto);
+
+    [Delete ("/Employee")]
+    Task DeleteEmployee(string id);
+
 }
 
 //app.MapPost("/Login", Login);
@@ -25,7 +32,6 @@
 //    Task<Employee> GetEmployeeById(string Id);
 //    Task DeleteEmployee(string Id);
 //    Task<Employee> InsertEmployee(Employee employeeDto);
-//    Task UpdateEmployee(Employee employee);
 //    Task<string> GetPasswordAndSaltHex(string loginInfo);
 //    Task<Employee> GetEmployeeByEmailOrId(string loginInfo);
 //}

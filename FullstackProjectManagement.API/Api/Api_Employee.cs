@@ -7,7 +7,7 @@
         app.MapGet("/Employee", GetAllEmployees);
         app.MapGet("/Employee/{id}", GetEmployeeById);
         app.MapPost("/Employee", InsertEmployee);
-        app.MapPut("/Employee", UpdateEmployee);
+        app.MapPut("/Employee/{id}", UpdateEmployee);
         app.MapDelete("/Employee", DeleteEmployee);
         app.MapGet("/ExchangeRates", GetAllCurrencies);
         app.MapPut("/ExchangeRates/{id}", UpdateCurrency);

@@ -23,8 +23,11 @@
     [EmailAddress]
     [StringLength(300)]
     public string Email { get; set; } = string.Empty;
-    
+    [Required(ErrorMessage = "A password is required")]
     public string Password { get; set; } = string.Empty;
 
-    public EmployeeDto() { }
+    public EmployeeDto() 
+    {
+        Birthdate = DateTime.Now.AddYears(-20);
+    }
 }

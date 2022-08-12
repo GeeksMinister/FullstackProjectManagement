@@ -1,23 +1,26 @@
-﻿@page "/Addemployee"
+﻿@page "/UpdateEmployee/{id}"
 @inject IEmployeeClientData _data
 @inject NavigationManager NavManager
 
-
 <div class="form-group ">
-    <h2 class="text-primary m-4">Add Employee</h2>
+    <h2 class="text-primary m-4">Update Employee</h2>
 
-    <EditForm Model="employeeDto" OnValidSubmit="@Add" class="card card-body bg-light mt-3">
+    <EditForm Model="employeeDto" OnValidSubmit="@Update" class="card card-body bg-light mt-3">
         <DataAnnotationsValidator />
         <ValidationSummary />
         <div class="row form-group">
             <div class="row w-100 mb-3">
                 <div class="col-s-auto col-lg-4">
+                    <label for="id">Employee-Id</label>
+                    <input class="form-control" id="id" placeholder="@Id" disabled />
+                </div>
+                <div class="col-s-auto col-lg-4">
                     <label for="firstName">First Name</label>
-                    <InputText class="form-control" id="firstName" @bind-Value="employeeDto.FirstName" />
+                    <InputText class="form-control" id="firstName" @bind-Value="employeeDto.FirstName" placeholder="@employee.FirstName" />
                 </div>
                 <div class=" col-s-auto col-lg-4">
                     <label for="lastName">Last Name</label>
-                    <InputText class="form-control" id="LastName" @bind-Value="employeeDto.LastName" />
+                    <InputText class="form-control" id="LastName" @bind-Value="employeeDto.LastName" placeholder="@employee.LastName" />
                 </div>
                 <div class="col-s-auto col-lg-4">
                     <label for="birthdate">
@@ -30,15 +33,15 @@
             <div class="row w-100 mb-3">
                 <div class="col-s-auto col-lg-4">
                     <label for="city">City</label>
-                    <InputText class="form-control" id="city" @bind-Value="employeeDto.City" />
+                    <InputText class="form-control" id="city" @bind-Value="employeeDto.City" placeholder="@employee.City" />
                 </div>
                 <div class="col-s-auto col-lg-4">
                     <label for="email">Email</label>
-                    <InputText class="form-control" id="email" @bind-Value="employeeDto.Email" />
+                    <InputText class="form-control" id="email" @bind-Value="employeeDto.Email" placeholder="@employee.Email" />
                 </div>
                 <div class="col-s-auto col-lg-4">
                     <label for="phone">Phone</label>
-                    <InputText class="form-control" id="phone" @bind-Value="employeeDto.Phone" />
+                    <InputText class="form-control" id="phone" @bind-Value="employeeDto.Phone" placeholder="@employee.Phone" />
                 </div>
             </div>
             <div class="col-s-auto col-lg-4">
@@ -49,7 +52,8 @@
 
         <div class="m-4 row w-75">
             <label for="role" class="text-primary ">Select Role</label>
-            <InputSelect class="h5 list-group-item-secondary fw-bold col-s-10 col-md-auto col-l-2" id="role" @bind-Value="employeeDto.Role">
+            <InputSelect class="h5 list-group-item-secondary fw-bold col-s-10 col-md-auto col-l-2" id="role"
+                         @bind-Value="employeeDto.Role">
                 <option value="Employee">Employee</option>
                 <option value="Admin">Admin</option>
                 <option value="Manager">Manager</option>
@@ -57,7 +61,7 @@
         </div>
 
         <div class="w-75 m-5 text-center row">
-            <button type="submit" class="btn btn-success fw-bold m-2 col-sm-auto col-lg-5">Add Employee</button>
+            <button type="submit" class="btn btn-warning fw-bold  m-2 col-sm-auto col-lg-5">Update Employee</button>
             <button type="reset" class="btn btn-secondary  m-2 col-sm-auto col-lg-5">Reset</button>
             <a href="employees" class="btn btn-primary  m-2  col-sm-auto col-lg-5">Cancel</a>
         </div>
@@ -67,11 +71,22 @@
 
 
 @code {
+    Employee employee = new Employee();
     EmployeeDto employeeDto = new EmployeeDto();
-
-    private async Task Add()
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+    protected override async Task OnInitializedAsync()
     {
-        await _data.InsertEmployee(employeeDto);
+        employee = await _data.GetEmployeeById(Id);
+        employeeDto.Birthdate = employee.Birthdate;
+        employeeDto.Role = employee.Role;
+    }
+
+    private async Task Update()
+    {
+        await _data.UpdateEmployee(Id, employeeDto);
         NavManager.NavigateTo("/Employees");
     }
+
+
 }

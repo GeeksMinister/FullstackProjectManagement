@@ -1,4 +1,4 @@
-﻿@page "/employee/employeedetails/{id}"
+﻿@page "/EmployeeDetails/{id}"
 @inject IEmployeeClientData _data
 
     <PageTitle>Employee - Details</PageTitle>
@@ -58,9 +58,9 @@ else
     </table>
 
     <div class="row-cols-6 m-5 text-center">
-        <a class="btn btn-primary p-2 m-3">Update</a>
-        <a class="btn btn-danger p-2 m-3">Delete</a>
-        <a href="employees" class="btn btn-info p-2 m-3">Back</a>
+        <a href="@($"/UpdateEmployee/{employee.Id}")" class="btn btn-warning p-2 m-3">Update</a>
+        <a href="@($"/DeleteEmployee/{employee.Id}")" class="btn btn-danger p-2 m-3">Delete</a>
+        <a href="employees" class="btn btn-primary p-2 m-3">Back</a>
     </div>
 
 }
