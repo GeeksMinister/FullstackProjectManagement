@@ -1,16 +1,16 @@
 ﻿@page "/EmployeeDetails/{id}"
 @inject IEmployeeClientData _data
 
-    <PageTitle>Employee - Details</PageTitle>
+<PageTitle>Employee - Details</PageTitle>
 
 @if (employee is null)
 {
-    <p>No Employee Was Found or Returned From Database</p>
+    <em>Loading ......</em>
 }
 else
 {
     <table class="table table-striped table-details">
-        <tbody class="border-5 fw-bold text-center">
+        <tbody class="border-5 fw-bold text-center h5">
 
             <tr class="border-3">
                 <th class="table-dark">Id</th>
@@ -39,7 +39,7 @@ else
 
             <tr class="border-3">
                 <th class="table-dark">Birthdate</th>
-                <td>@employee.Birthdate</td>
+                <td>@employee.Birthdate.ToShortDateString()</td>
             </tr>
 
             <tr class="border-3">
@@ -50,7 +50,7 @@ else
             <tr class="">
                 <th class="table-dark">Tasks</th>
                 <td>
-                    <a href="" class="btn btn-primary btn-outline-info p pe-4 ps-4">@tasksCount</a>
+                    <a href="@($"/Employee/{employee.Id}/Tasks")" class="btn btn-primary btn-outline-info p pe-4 ps-4">@tasksCount</a>
                 </td>
             </tr>
 
@@ -65,16 +65,21 @@ else
 
 }
 
-@code{
+@code {
     Employee? employee;
-    int? tasksCount = null;
+    int? tasksCount = 0;
     [Parameter]
     public string Id { get; set; } = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        employee = await _data.GetEmployeeById(Id);
-        tasksCount = employee?.Todos?.Count();
-        tasksCount ??= 0;
+        try
+        {
+            employee = await _data.GetEmployeeById(Id); 
+            if (Id == string.Empty) return;
+            tasksCount = await _data.GetEmployeeTasksCount(Id);
+        }
+        catch (Exception) { }
     }
+
 }

@@ -11,16 +11,16 @@
         <ValidationSummary />
         <div class="row form-group">
             <div class="row w-100 mb-3">
-                <div class="col-s-auto col-lg-4">
+                <div class="col-s-auto col-lg-4 mb-2">
                     <label for="firstName">First Name</label>
                     <InputText class="form-control" id="firstName" @bind-Value="employeeDto.FirstName" />
                 </div>
-                <div class=" col-s-auto col-lg-4">
+                <div class=" col-s-auto col-lg-4 mb-2">
                     <label for="lastName">Last Name</label>
                     <InputText class="form-control" id="LastName" @bind-Value="employeeDto.LastName" />
                 </div>
                 <div class="col-s-auto col-lg-4">
-                    <label for="birthdate">
+                    <label for="birthdate" class="m-2">
                         Date of Birth
                         <InputDate class="form-control" id="birthdate" @bind-Value="employeeDto.Birthdate" />
                     </label>
@@ -28,20 +28,20 @@
             </div>
 
             <div class="row w-100 mb-3">
-                <div class="col-s-auto col-lg-4">
+                <div class="col-s-auto col-lg-4 mb-2">
                     <label for="city">City</label>
                     <InputText class="form-control" id="city" @bind-Value="employeeDto.City" />
                 </div>
-                <div class="col-s-auto col-lg-4">
+                <div class="col-s-auto col-lg-4 mb-2">
                     <label for="email">Email</label>
                     <InputText class="form-control" id="email" @bind-Value="employeeDto.Email" />
                 </div>
-                <div class="col-s-auto col-lg-4">
+                <div class="col-s-auto col-lg-4 mb-2">
                     <label for="phone">Phone</label>
                     <InputText class="form-control" id="phone" @bind-Value="employeeDto.Phone" />
                 </div>
             </div>
-            <div class="col-s-auto col-lg-4">
+            <div class="col-s-auto col-lg-4 mb-2">
                 <label for="password">Password</label>
                 <InputText class="form-control " id="password" type="password" @bind-Value="employeeDto.Password" />
             </div>
@@ -58,8 +58,8 @@
 
         <div class="w-75 m-5 text-center row">
             <button type="submit" class="btn btn-success fw-bold m-2 col-sm-auto col-lg-5">Add Employee</button>
-            <button type="reset" class="btn btn-secondary  m-2 col-sm-auto col-lg-5">Reset</button>
-            <a href="employees" class="btn btn-primary  m-2  col-sm-auto col-lg-5">Cancel</a>
+            <button type="reset" class="btn btn-secondary m-2 col-sm-auto col-lg-5">Reset</button>
+            <a href="employees" class="btn btn-primary m-2 col-sm-auto col-lg-5">Cancel</a>
         </div>
     </EditForm>
 </div>
@@ -71,7 +71,11 @@
 
     private async Task Add()
     {
-        await _data.InsertEmployee(employeeDto);
-        NavManager.NavigateTo("/Employees");
+        try
+        {
+            await _data.InsertEmployee(employeeDto);
+            NavManager.NavigateTo("/Employees");
+        }
+        catch (Exception) { }
     }
 }

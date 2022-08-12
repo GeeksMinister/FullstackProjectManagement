@@ -1,0 +1,82 @@
+﻿@page "/Employee/{id}/Tasks"
+@inject IEmployeeClientData _data;
+
+<PageTitle>Tasks</PageTitle>
+
+<div class="row text-end m-1">
+    <a href="@($"/EmployeeDetails/{Id}")" class="btn btn-primary fw-bold col-sm-2 col-md-2 col-l-1">Back</a>
+</div>
+<div class="container-fluid p-3">
+    @if (tasks?.Any() == false)
+    {
+        <p>No Task Was Found or Returned From Database</p>
+    }
+    else
+    {
+    <div class="row pt-4">
+        <h4 class="text-primary fw-light col-6">Tasks to do <span class="small">(@tasks?.Count)</span></h4>
+        <div class=" text-end">
+            <button class="btn btn-success   fw-bold" @onclick="@(async () => await LoadTasks())">Refresh</button>
+        </div>
+    </div>
+    <br />
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr class="border-5">
+                    <th class="text-center">
+                        Task
+                    </th>
+                    <th class="text-center">
+                        Description
+                    </th>
+                    <th class="text-center">
+                        Priority
+                    </th>
+                    <th class="text-center">
+                        Status
+                    </th>
+                    <th class="text-center">
+                        Project
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var task in tasks!)
+                {
+                    <tr class="border-5">
+                        <td class="col-2 align-middle text-lg-center fw-bold">@task.TaskName</td>
+                        <td class="col-4 text-sm-center align-middle">@task.Description</td>
+                        <td class="col-1 text-sm-center align-middle">@task.Priority</td>
+                        <td class="col-1 text-sm-center align-middle">@task.Status</td>
+                        <td class="col-1 text-sm-center align-middle">@task.ProjectId</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+
+@code {
+    List<Todo> tasks = new List<Todo>();
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadTasks();
+    }
+
+    private async Task LoadTasks()
+    {
+        try
+        {
+            var result = await _data.GetEmployeeTasks(Id);
+            if (result == null) return;
+
+            tasks = result.ToList();
+        }
+        catch (Exception) { }
+
+    }
+
+}

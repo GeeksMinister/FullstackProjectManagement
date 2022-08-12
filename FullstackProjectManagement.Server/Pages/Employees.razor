@@ -4,7 +4,13 @@
 <PageTitle>Employees</PageTitle>
 
 
-<div class="container p-3">
+<div class="container-fluid p-3">
+    @if (employees.Any() == false)
+    {
+        <p>No Employee Was Found or Returned From Database</p>
+    }
+    else
+    {
     <div class="row pt-4">
         <h4 class="text-primary fw-light col-6">Registered Employees <span class="small">(@employees.Count)</span></h4>
         <div class=" text-end">
@@ -12,12 +18,6 @@
         </div>
     </div>
     <br />
-    @if (employees.Any() == false)
-    {
-        <p>No Employee Was Found or Returned From Database</p>
-    }
-    else
-    {
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr class="border-5">
@@ -31,7 +31,7 @@
                         City
                     </th>
                     <th class="text-center">
-                        Birthdate
+                        Phone
                     </th>
                     <th class="text-center">
                         Role
@@ -46,9 +46,9 @@
                 {
                     <tr class="border-5">
                         <td class="col-4 align-middle text-lg-center fw-bold">@employee.Username()</td>
-                        <td class="col-4 text-sm-center">@employee.Email</td>
+                        <td class="col-4 text-sm-center align-middle">@employee.Email</td>
                         <td class="col-1 text-sm-center align-middle">@employee.City</td>
-                        <td class="col-2 text-sm-center align-middle">@employee.Birthdate.ToShortDateString()</td>
+                        <td class="col-2 text-sm-center align-middle">@employee.Phone</td>
                         <td class="col-1 text-sm-center align-middle">@employee.Role</td>
                         <td>
                             <div class="text-center">
@@ -70,8 +70,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await _data.GetAllEmployees();
-        employees = result.ToList();
+        await LoadEmployee();
+    }
+
+    private async Task LoadEmployee()
+    {
+        try
+        {
+            var result = await _data.GetAllEmployees();
+            if (result == null) return;
+            employees = result.ToList();
+        }
+        catch (Exception) { }
     }
 
 

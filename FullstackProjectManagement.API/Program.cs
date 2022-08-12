@@ -40,6 +40,7 @@ builder.Services.AddSingleton<IUserStoryData, UserStoryData>();
 builder.Services.AddSingleton<IEmployeeData, EmployeeData>();
 builder.Services.AddSingleton<ICurrencyData, CurrencyData>();
 builder.Services.AddSingleton<IProjectData, ProjectData>();
+builder.Services.AddSingleton<ITodoData, TodoData>();
 builder.Services.AddAutoMapper(typeof(MapperInitializer));
 
 var app = builder.Build();
@@ -53,8 +54,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.ConfigureApiProject();
-app.ConfigureApiUserStory();
 app.ConfigureApiEmployee();
+app.ConfigureApiUserStory();
+app.ConfigureApiEmployeeTasks();
 
 //app.UseCors("OpenCorsPolicy");   
 
