@@ -46,7 +46,7 @@
     public async Task UpdateEmployee(Employee employee)
     {
         string query = "UPDATE Employee SET FirstName = @FirstName, LastName = @LastName, " +
-"Birthdate = @Birthdate, Phone = @Phone, Email = @Email, City = @City, Role = @Role," +
+"Birthdate = Substring(@Birthdate, 0, 11), Phone = @Phone, Email = @Email, City = @City, Role = @Role," +
 " PasswordHash = @PasswordHash, PasswordSalt = @PasswordSalt WHERE Id = @Id";
         await _dbContext.SaveData(query, employee);
     }
@@ -54,7 +54,7 @@
     public async Task<Employee> InsertEmployee(Employee employee)
     {
         string query = "INSERT INTO Employee (Id, FirstName, LastName, Birthdate, Phone, Email, " +
-"City, Role, PasswordHash, PasswordSalt) VALUES(@Id, @FirstName, @LastName, @Birthdate, @Phone," +
+"City, Role, PasswordHash, PasswordSalt) VALUES(@Id, @FirstName, @LastName, Substring(@Birthdate, 0, 11), @Phone," +
 " @Email, @City, @Role, @PasswordHash, @PasswordSalt)";
         var result = await _dbContext.LoadData<Employee, object>(query, employee);
         return result.FirstOrDefault()!;

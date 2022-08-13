@@ -25,22 +25,3 @@
     Task<int> GetEmployeeTasksCount(string emp_Id);
 
 }
-
-//app.MapPost("/Login", Login);
-//app.MapGet("/Employee", GetAllEmployees);
-//app.MapGet("/Employee/{id}", GetEmployeeById);
-//app.MapPost("/Employee", InsertEmployee);
-//app.MapPut("/Employee", UpdateEmployee);
-//app.MapDelete("/Employee", DeleteEmployee);
-//app.MapGet("/ExchangeRates", GetAllCurrencies);
-//app.MapPut("/ExchangeRates", UpdateCurrency);
-
-//public interface IEmployeeData
-//{
-//    Task<IEnumerable<Employee>> GetAllEmployees();
-//    Task<Employee> GetEmployeeById(string Id);
-//    Task DeleteEmployee(string Id);
-//    Task<Employee> InsertEmployee(Employee employeeDto);
-//    Task<string> GetPasswordAndSaltHex(string loginInfo);
-//    Task<Employee> GetEmployeeByEmailOrId(string loginInfo);
-//}

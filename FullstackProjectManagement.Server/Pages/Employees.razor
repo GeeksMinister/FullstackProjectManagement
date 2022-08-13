@@ -3,9 +3,12 @@
 
 <PageTitle>Employees</PageTitle>
 
-
 <div class="container-fluid p-3">
-    @if (employees.Any() == false)
+    @if (employees is null)
+    {
+        <em class="h3">Loading ......</em>
+    }
+    else if (employees.Any() == false)
     {
         <p>No Employee Was Found or Returned From Database</p>
     }
@@ -21,24 +24,12 @@
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr class="border-5">
-                    <th class="text-center">
-                        Employee
-                    </th>
-                    <th class="text-center">
-                        Email
-                    </th>
-                    <th class="text-center">
-                        City
-                    </th>
-                    <th class="text-center">
-                        Phone
-                    </th>
-                    <th class="text-center">
-                        Role
-                    </th>
-                    <th class="text-center">
-                        Changes
-                    </th>
+                    <th class="text-center">Employee</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">City</th>
+                    <th class="text-center">Phone</th>
+                    <th class="text-center">Role</th>
+                    <th class="text-center">Changes</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,7 +57,7 @@
 
 
 @code {
-    List<Employee> employees = new List<Employee>();
+    List<Employee>? employees;
 
     protected override async Task OnInitializedAsync()
     {

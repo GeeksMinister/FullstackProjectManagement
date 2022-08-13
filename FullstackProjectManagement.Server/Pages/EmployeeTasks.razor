@@ -6,6 +6,7 @@
 <div class="row text-end m-1">
     <a href="@($"/EmployeeDetails/{Id}")" class="btn btn-primary fw-bold col-sm-2 col-md-2 col-l-1">Back</a>
 </div>
+
 <div class="container-fluid p-3">
     @if (tasks?.Any() == false)
     {
@@ -23,21 +24,11 @@
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr class="border-5">
-                    <th class="text-center">
-                        Task
-                    </th>
-                    <th class="text-center">
-                        Description
-                    </th>
-                    <th class="text-center">
-                        Priority
-                    </th>
-                    <th class="text-center">
-                        Status
-                    </th>
-                    <th class="text-center">
-                        Project
-                    </th>
+                    <th class="text-center">Task</th>
+                    <th class="text-center">Description</th>
+                    <th class="text-center">Priority</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Project</th>
                 </tr>
             </thead>
             <tbody>

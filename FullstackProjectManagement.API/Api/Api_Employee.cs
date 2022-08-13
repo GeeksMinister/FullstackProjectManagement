@@ -13,7 +13,7 @@
         app.MapPut("/ExchangeRates/{id}", UpdateCurrency);
     }
 
-    private static async Task<IResult> Login(string loginInfo, string password, IConfiguration config, IEmployeeData data, HttpContext http)
+    private static async Task<IResult> Login([FromForm]string loginInfo, [FromForm]string password, IConfiguration config, IEmployeeData data, HttpContext http)
     {
         try
         {
@@ -53,7 +53,7 @@
         //employee.TokenExpires = refreshToken.Expires;
     }
 
-    //[Authorize(Roles = "Construction Manager, Estimator")]
+    //[Authorize(Roles = "Admin, Manager")]
     private static async Task<IResult> GetAllEmployees(IEmployeeData data, HttpContext context)
     {
         try

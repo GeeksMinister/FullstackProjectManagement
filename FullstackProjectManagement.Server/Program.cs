@@ -10,7 +10,7 @@ builder.Services.AddRefitClient<ICurrencyClientData>().ConfigureHttpClient(
 builder.Services.AddRefitClient<IEmployeeClientData>().ConfigureHttpClient(
     client =>client.BaseAddress = new Uri("https://localhost:7128"));
 
-
+builder.Services.AddAutoMapper(typeof(MapperInitializer));
 builder.Services.AddSingleton<ISQLiteDataAccess, SQLiteDataAccess>();
 builder.Services.AddSingleton<ICurrencyData, CurrencyData>();
 

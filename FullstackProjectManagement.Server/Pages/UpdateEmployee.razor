@@ -1,5 +1,6 @@
 ﻿@page "/UpdateEmployee/{id}"
 @inject IEmployeeClientData _data
+@inject IMapper _mapper
 @inject NavigationManager NavManager
 
 <div class="form-group ">
@@ -80,8 +81,7 @@
         try
         {
             employee = await _data.GetEmployeeById(Id);
-            employeeDto.Birthdate = employee.Birthdate;
-            employeeDto.Role = employee.Role;
+            employeeDto = _mapper.Map<EmployeeDto>(employee);
         }
         catch (Exception) { }
     }

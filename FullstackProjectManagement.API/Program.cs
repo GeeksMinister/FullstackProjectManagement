@@ -1,12 +1,5 @@
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddCors(policy =>
-{
-    policy.AddPolicy("OpenCorsPolicy", opt =>
-    opt.AllowAnyOrigin()
-    .AllowAnyHeader()
-    .AllowAnyMethod());
-});
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -43,6 +36,14 @@ builder.Services.AddSingleton<IProjectData, ProjectData>();
 builder.Services.AddSingleton<ITodoData, TodoData>();
 builder.Services.AddAutoMapper(typeof(MapperInitializer));
 
+builder.Services.AddCors(policy =>
+{
+    policy.AddPolicy("OpenCorsPolicy", opt =>
+    opt.AllowAnyOrigin()
+    .AllowAnyHeader()
+    .AllowAnyMethod());
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -58,7 +59,7 @@ app.ConfigureApiEmployee();
 app.ConfigureApiUserStory();
 app.ConfigureApiEmployeeTasks();
 
-//app.UseCors("OpenCorsPolicy");   
+app.UseCors("OpenCorsPolicy");
 
 app.UseAuthentication();
 

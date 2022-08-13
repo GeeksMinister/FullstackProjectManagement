@@ -21,7 +21,11 @@
     {
         <p>@error</p>
     }
-    @if (currencies?.Any() == false)
+    @if (currencies is null)
+    {
+        <em class="h3">Loading .......</em>
+    }
+    else if (currencies.Any() == false)
     {
         <div class="h3 m-5"><em>Loading.......</em></div>
     }
@@ -75,7 +79,7 @@
 
 </div>
 @code {
-    private List<Currency>? currencies = new List<Currency>();
+    private List<Currency>? currencies;
     int index;
     string? error;
 
