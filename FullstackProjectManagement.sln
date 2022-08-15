@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullstackProjectManagement.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullstackProjectManagement.Server", "FullstackProjectManagement.Server\FullstackProjectManagement.Server.csproj", "{6F27FA00-27FC-4B6C-8D6B-1FB226600BBD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FullstackProjectManagement.WASM", "FullstackProjectManagement.WASM\FullstackProjectManagement.WASM.csproj", "{953479BD-A3F5-488E-9200-2166EC8D1351}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6F27FA00-27FC-4B6C-8D6B-1FB226600BBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F27FA00-27FC-4B6C-8D6B-1FB226600BBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F27FA00-27FC-4B6C-8D6B-1FB226600BBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{953479BD-A3F5-488E-9200-2166EC8D1351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{953479BD-A3F5-488E-9200-2166EC8D1351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{953479BD-A3F5-488E-9200-2166EC8D1351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{953479BD-A3F5-488E-9200-2166EC8D1351}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

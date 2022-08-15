@@ -5,7 +5,6 @@
 
     [Put("/ExchangeRates/{id}")]
     Task<Currency> UpdateCurrency([Header("Key")] string Key, Currency currency, int id = 1);
-
     
 }
 

@@ -1,0 +1,37 @@
+﻿@inherits LayoutComponentBase
+@inject IAuthenticationService AuthService
+@inject NavigationManager NavManager
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <AuthorizeView>
+                <Authorized>
+                    Welcome @context.User.FindFirst(ClaimTypes.Name)!.Value
+                    <span class="btn p-0 m-3 nav-link oi oi-account-logout" @onclick="@(async () => await ExecuteLogout())"> Log Out</span>
+                </Authorized>
+                <NotAuthorized>
+                    <Login />
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code{
+
+    private async Task ExecuteLogout()
+    {
+        await AuthService.LogOut();
+        NavManager.NavigateTo("/");
+    }
+
+}

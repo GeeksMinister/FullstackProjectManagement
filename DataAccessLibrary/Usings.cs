@@ -1,4 +1,5 @@
-﻿global using System;
+﻿global using Refit;
+global using System;
 global using System.IO;
 global using AutoMapper;
 global using System.Data;

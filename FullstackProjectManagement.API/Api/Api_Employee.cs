@@ -13,21 +13,21 @@
         app.MapPut("/ExchangeRates/{id}", UpdateCurrency);
     }
 
-    private static async Task<IResult> Login([FromForm]string loginInfo, [FromForm]string password, IConfiguration config, IEmployeeData data, HttpContext http)
+    private static async Task<IResult> Login(AuthenticationUserModel authModel, IConfiguration config, IEmployeeData data, HttpContext http)
     {
         try
         {
-            var employee = await data.GetEmployeeByEmailOrId(loginInfo);
+            var employee = await data.GetEmployeeByEmailOrId(authModel.LoginInfo);
             if (employee == null) return Results.NotFound("Login Info Wasn't Found");
 
-            (var passwordSalt, var passwordHash) = await GetPasswordAndSaltHash(loginInfo, data);
-            if (VerifyPassword(password, passwordSalt, passwordHash) == false)
+            (var passwordSalt, var passwordHash) = await GetPasswordAndSaltHash(authModel.LoginInfo, data);
+            if (VerifyPassword(authModel.Password, passwordSalt, passwordHash) == false)
             {
                 return Results.BadRequest("Wrong Password");
             }
             var authenticatedUser = new AuthenticatedUserModel
             {
-                UserName = $"{employee.FirstName} {employee.LastName}",
+                Username = $"{employee.FirstName} {employee.LastName}",
                 Email = employee.Email,
                 Access_Token = CreateToken(employee, config)
             };
