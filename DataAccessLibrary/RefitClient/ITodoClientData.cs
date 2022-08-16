@@ -15,11 +15,11 @@
     [Post("/Task")]
     Task<Todo> InsertTask(TodoDto todoDto);
 
-    [Put("/Task")]
-    Task<Todo> UpdateTask(TodoDto todoDto);
+    [Put("/Task/{id}")]
+    Task<Todo> UpdateTask(TodoDto todoDto, string id);
 
-    [Delete("/Task")]
-    Task<Todo> DeleteTask(string id);
+    [Delete("/Task/{id}")]
+    Task DeleteTask(string id);
 }
 
 

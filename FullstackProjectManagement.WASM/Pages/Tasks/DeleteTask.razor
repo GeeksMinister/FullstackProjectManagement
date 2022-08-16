@@ -1,0 +1,82 @@
+﻿@page "/DeleteTask/{EmployeeId}/{TaskId}"
+@inject NavigationManager NavManager
+@inject ITodoClientData _todoData
+@inject IMapper _mapper
+
+<PageTitle>Delete Task</PageTitle>
+
+<div class="form-group ">
+    <h2 class="text-primary m-4">Delete Task</h2>
+
+    <EditForm Model="_todo" OnValidSubmit="@(async () => await Delete())" class="card card-body bg-light mt-3">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="row">
+
+            <div class="w-100 mb-3">
+                <div class="col-s-auto col-lg-8 mb-2">
+                    <label for="taskName">Task Name</label>
+                    <InputText class="form-control" id="taskName" @bind-Value="_todo.TaskName" disabled/>
+                </div>
+                <div class="col-2 col-lg-1 mb-2">
+                    <label for="priority">Priority</label>
+                    <InputNumber class="form-control" id="priority" min="1" max="5" @bind-Value="_todo.Priority" disabled/>
+                </div>
+                <div class="col-sm-5  col-lg-3 mb-2 ">
+                    <label for="status">Status</label>
+                    <InputText class="form-control" id="status" @bind-Value="_todo.Status" disabled/>
+                </div>
+            </div>
+
+            <div class="w-100 mb-3">
+                <div class="col-3 w-auto m-3 ">
+                    <label for="description">Description</label>
+                    <InputTextArea rows="7" class="form-control w-100 " id="description" @bind-Value="_todo.Description" disabled/>
+                </div>
+            </div>
+
+            <div class="m-2 row w-75">
+                    <div class="col-3 w-auto m-3 ">
+                        <label for="project" class="text-primary fw-bold mb-2 me-0 h6">Project name</label>
+                        <InputText class="form-control " id="project" @bind-Value="_todo.ProjectId" disabled />
+                    </div>
+            </div>
+
+            <div class="w-75 m-5 text-center row">
+                <button type="submit" class="btn btn-danger fw-bold m-2 col-sm-auto col-lg-5">Delete</button>
+                <a href="EmployeeTasks" class="btn btn-primary m-2 col-sm-auto col-lg-5">Cancel</a>
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+
+
+@code {
+    [Parameter]
+    public string EmployeeId { get; set; } = string.Empty;
+    [Parameter]
+    public string TaskId { get; set; } = string.Empty;
+    private Todo _todo = new Todo();
+    private List<Project> _projects = new List<Project>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var todo = await _todoData.GetTaskById(TaskId);
+            _todo = todo;
+        }
+        catch (Exception) { }
+
+    }
+    private async Task Delete()
+    {
+        try
+        {
+            await _todoData.DeleteTask(TaskId);
+            NavManager.NavigateTo("/EmployeeTasks");
+        }
+        catch (Exception) { }
+    }
+}

@@ -3,7 +3,7 @@
     public static void ConfigureApiUserStory(this WebApplication app)
     {
         app.MapGet("/UserStory", GetAllUserStories);
-        app.MapGet("/UserStory{id}", GetUserStoryById);
+        app.MapGet("/UserStory/{id}", GetUserStoryById);
         app.MapPut("/UserStory", UpdateUserStory);
         app.MapDelete("/UserStory", DeleteUserStory);
         app.MapPost("/UserStory", InsertUserStory);

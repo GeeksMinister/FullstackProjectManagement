@@ -7,8 +7,8 @@
         app.MapGet("/Task/Employee/{EmployeeId}", GetEmployeeTasks);
         app.MapGet("/Task/Employee/Count/{EmployeeId}", GetEmployeeTasksCount);
         app.MapPost("/Task", InsertTask);
-        app.MapPut("/Task", UpdateTask);
-        app.MapDelete("/Task", DeleteTask);
+        app.MapPut("/Task/{id}", UpdateTask);
+        app.MapDelete("/Task/{id}", DeleteTask);
     }
 
     private static async Task<IResult> GetAllTasks(ITodoData data, HttpContext context)

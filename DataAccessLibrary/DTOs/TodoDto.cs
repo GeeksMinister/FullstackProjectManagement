@@ -8,9 +8,12 @@
     [StringLength(1250, ErrorMessage = "1250 charactera max!")]
     public string? Description { get; set; }
 
+    [Required]
     [Range(1, 5)]
     [DisplayName("Set Priority")]
     public int? Priority { get; set; } = null;
+
+    [Required]
     public string Status { get; set; } = "Not Started";
 
     [StringLength(36)]
@@ -25,4 +28,3 @@
     }
 
 }
-
