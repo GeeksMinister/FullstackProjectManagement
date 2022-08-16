@@ -1,12 +1,15 @@
 ﻿@page "/EmployeeTasks"
-@inject IEmployeeClientData _data
+@inject ITodoClientData _data
 
 <PageTitle>Tasks</PageTitle>
 
 <AuthorizeView Roles="Employee, Admin, Manager">
     <Authorized>
         <h3>Registered Tasks for @context.User.FindFirst(ClaimTypes.Name)!.Value </h3>
-        <div class="container-fluid p-3">
+        <div class="container-fluid p-1">
+            <div class="text-end m-0">
+                <a href="@($"AddTask/{EmployeeId}")" class="btn btn-success fw-bold m-0 me-1  p-3">Add Task</a>
+            </div>
             @if (tasks is null)
             {
                 <em class="h3">Loading ......</em>
@@ -19,9 +22,6 @@
             {
                 <div class="row pt-4">
                     <h4 class="text-primary fw-light col-6">Tasks to do <span class="small">(@tasks?.Count)</span></h4>
-                    <div class=" text-end">
-                        <a href="AddTask" class="btn btn-success fw-bold">Add Task</a>
-                    </div>
                 </div>
                 <br />
                 <table class="table table-bordered table-striped">
@@ -63,23 +63,19 @@
     </NotAuthorized>
 </AuthorizeView>
 
-
-
-
-
 @code {
     [CascadingParameter]
     public Task<AuthenticationState>? AuthState { get; set; }
 
     List<Todo>? tasks;
-    public string Id = string.Empty;
+    public string EmployeeId = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthState!;
         if (authState.User.Identity!.IsAuthenticated)
         {
-            Id = authState.User.FindFirst(ClaimTypes.SerialNumber)!.Value;
+            EmployeeId = authState.User.FindFirst(ClaimTypes.SerialNumber)!.Value;
 
             await LoadTasks();
         }
@@ -89,13 +85,12 @@
     {
         try
         {
-            var result = await _data.GetEmployeeTasks(Id);
+            var result = await _data.GetEmployeeTasks(EmployeeId);
             if (result == null) return;
             tasks = result.ToList();
         }
         catch (Exception) { }
     }
-
 
 }
 

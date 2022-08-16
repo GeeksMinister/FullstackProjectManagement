@@ -1,5 +1,6 @@
 ﻿@page "/EmployeeDetails/{id}"
-@inject IEmployeeClientData _data
+@inject IEmployeeClientData _employeeData
+@inject ITodoClientData _todoData
 
 <PageTitle>Employee - Details</PageTitle>
 
@@ -76,9 +77,9 @@ else
     {
         try
         {
-            employee = await _data.GetEmployeeById(Id); 
+            employee = await _employeeData.GetEmployeeById(Id); 
             if (Id == string.Empty) return;
-            tasksCount = await _data.GetEmployeeTasksCount(Id);
+            tasksCount = await _todoData.GetEmployeeTasksCount(Id);
         }
         catch (Exception) { }
     }

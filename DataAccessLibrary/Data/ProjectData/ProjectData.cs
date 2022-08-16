@@ -13,12 +13,19 @@
         return await _dbContext.LoadData<Project, object>(query, new { });
     }
 
+    public async Task<IEnumerable<Project>> GetProjectNames()
+    {
+        string query = "SELECT Id, ProjectName FROM Project";
+        return await _dbContext.LoadData<Project, object>(query, new { });
+    }
+
     public async Task<Project> GetProjectById(string Id)
     {
         string query = "SELECT Id, ProjectName, Description, Customer, Status FROM Project WHERE Id = @Id";
         var result = await _dbContext.LoadData<Project, object>(query, new { Id });
         return result.FirstOrDefault()!;
     }
+
 
     public async Task DeleteProject(string Id)
     {

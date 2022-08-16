@@ -1,0 +1,89 @@
+﻿@page "/AddTask/{EmployeeId}"
+@inject NavigationManager NavManager
+@inject IProjectClientData _projectData
+@inject ITodoClientData _todoData
+@inject IMapper _mapper
+
+<PageTitle>Add Task</PageTitle>
+
+<div class="form-group ">
+    <h2 class="text-primary m-4">New Task</h2>
+
+    <EditForm Model="todoDto" OnValidSubmit="@Add" class="card card-body bg-light mt-3">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="row">
+
+            <div class="w-100 mb-3">
+                <div class="col-s-auto col-lg-8 mb-2">
+                    <label for="taskName">Task Name</label>
+                    <InputText class="form-control" id="taskName" @bind-Value="todoDto.TaskName" />
+                </div>
+                <div class="col-2 col-lg-1 mb-2">
+                    <label for="priority">Priority</label>
+                    <InputNumber class="form-control" id="priority" min="1" max="5" @bind-Value="todoDto.Priority" />
+                </div>
+                <div class="col-sm-5  col-lg-3 mb-2 ">
+                    <label for="status">Status</label>
+                    <InputText class="form-control" id="status" @bind-Value="todoDto.Status" />
+                </div>
+            </div>
+
+            <div class="w-100 mb-3">
+                <div class="col-3 w-auto m-3 ">
+                    <label for="description">Description</label>
+                    <InputTextArea rows="7" class="form-control w-100 " id="description" @bind-Value="todoDto.Description" />
+                </div>
+            </div>
+
+
+            <div class="m-4 row w-75">
+                <label for="role" class="text-primary fw-bold mb-2 me-0 h6">Select Project</label>
+                <InputSelect class="h5 list-group-item-secondary fw-bold col-s-10 col-md-auto col-l-2" id="role" @bind-Value="todoDto.ProjectId">
+                    @if (_projects.Any())
+                    {
+                        @foreach (var proj in _projects)
+                        {
+                            <option value="@proj.Id">@proj.ProjectName</option>
+                        }
+                    }
+                </InputSelect>
+            </div>
+
+            <div class="w-75 m-5 text-center row">
+                <button type="submit" class="btn btn-success fw-bold m-2 col-sm-auto col-lg-5">Add Task</button>
+                <button type="reset" class="btn btn-secondary m-2 col-sm-auto col-lg-5">Reset</button>
+                <a href="EmployeeTasks" class="btn btn-primary m-2 col-sm-auto col-lg-5">Cancel</a>
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+
+
+@code {
+    [Parameter]
+    public string EmployeeId { get; set; } = string.Empty;
+    TodoDto todoDto = new TodoDto();
+    private List<Project> _projects = new List<Project>();
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var projects = await _projectData.GetProjectNames();
+            _projects = projects.ToList();
+        }
+        catch (Exception) { }
+
+    }
+    private async Task Add()
+    {
+        try
+        {
+            todoDto.EmployeeId = EmployeeId;
+            await _todoData.InsertTask(todoDto);
+            NavManager.NavigateTo("/EmployeeTasks");
+        }
+        catch (Exception) { }
+    }
+}

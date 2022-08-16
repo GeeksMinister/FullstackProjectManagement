@@ -6,5 +6,6 @@
         CreateMap<Project, ProjectDto>().ReverseMap();
         CreateMap<UserStory, UserStoryDto>().ReverseMap();
         CreateMap<Currency, CurrencyDto>().ReverseMap();
+        CreateMap<Todo, TodoDto>().ReverseMap();
     }
 }

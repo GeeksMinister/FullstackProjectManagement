@@ -1,6 +1,5 @@
 ﻿public static class Api_Employee
 {
-
     public static void ConfigureApiEmployee(this WebApplication app)
     {
         app.MapPost("/Login", Login);

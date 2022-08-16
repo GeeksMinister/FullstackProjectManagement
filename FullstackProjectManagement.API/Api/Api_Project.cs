@@ -2,8 +2,9 @@
 {
     public static void ConfigureApiProject(this WebApplication app)
     {
-        app.MapGet("/Project{id}", GetProjectById);
+        app.MapGet("/Project/{id}", GetProjectById);
         app.MapGet("/Project", GetAllProjects);
+        app.MapGet("/Project/Names", GetProjectNames);
         app.MapPost("/Project", InsertProject);
         app.MapPut("/Project", UpdateProject);
         app.MapDelete("/Project", DeleteProject);
@@ -14,6 +15,22 @@
         try
         {
             var result = await data.GetAllProjects();
+            if (result?.Any() == false) return Results.NotFound();
+            var totalProjects = result?.ToList().Count.ToString();
+            context.Response.Headers.Add("Total_Projects", totalProjects);
+            return Results.Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return Results.Problem(ex.Message);
+        }
+    }
+
+    private static async Task<IResult> GetProjectNames(IProjectData data, HttpContext context)
+    {
+        try
+        {
+            var result = await data.GetProjectNames();
             if (result?.Any() == false) return Results.NotFound();
             var totalProjects = result?.ToList().Count.ToString();
             context.Response.Headers.Add("Total_Projects", totalProjects);
