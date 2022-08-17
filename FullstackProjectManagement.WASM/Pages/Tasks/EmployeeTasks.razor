@@ -23,6 +23,9 @@
                 <div class="row pt-4">
                     <h4 class="text-primary fw-light col-6">Tasks to do <span class="small">(@tasks?.Count)</span></h4>
                 </div>
+                <div class=" text-end">
+                    <button class="btn btn-secondary fw-bold" @onclick="@(async () => await LoadTasks())">Refresh</button>
+                </div>
                 <br />
                 <table class="table table-bordered table-striped">
                     <thead class="table-dark">

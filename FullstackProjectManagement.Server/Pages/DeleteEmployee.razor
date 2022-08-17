@@ -1,5 +1,6 @@
 ﻿@page "/DeleteEmployee/{id}"
 @inject IEmployeeClientData _data
+@inject IMapper _mapper
 @inject NavigationManager NavManager
 
 <div class="form-group ">
@@ -14,16 +15,16 @@
                 </div>
                 <div class="col-s-auto col-lg-4 mb-2">
                     <label for="firstName">First Name</label>
-                    <InputText class="form-control" id="firstName" @bind-Value="employeeDto.FirstName" placeholder="@employee.FirstName" disabled/>
+                    <InputText class="form-control" id="firstName" @bind-Value="employeeDto.FirstName" disabled />
                 </div>
                 <div class=" col-s-auto col-lg-4 mb-2">
                     <label for="lastName">Last Name</label>
-                    <InputText class="form-control" id="LastName" @bind-Value="employeeDto.LastName" placeholder="@employee.LastName" disabled/>
+                    <InputText class="form-control" id="LastName" @bind-Value="employeeDto.LastName" disabled />
                 </div>
                 <div class="col-s-auto col-lg-4">
                     <label for="birthdate" class="m-2">
                         Date of Birth
-                        <InputDate class="form-control" id="birthdate" @bind-Value="employeeDto.Birthdate" disabled/>
+                        <InputDate class="form-control" id="birthdate" @bind-Value="employeeDto.Birthdate" disabled />
                     </label>
                 </div>
             </div>
@@ -31,15 +32,15 @@
             <div class="row w-100 mb-3">
                 <div class="col-s-auto col-lg-4 mb-2">
                     <label for="city">City</label>
-                    <InputText class="form-control" id="city" @bind-Value="employeeDto.City" placeholder="@employee.City" disabled/>
+                    <InputText class="form-control" id="city" @bind-Value="employeeDto.City" disabled />
                 </div>
                 <div class="col-s-auto col-lg-4 mb-2">
                     <label for="email">Email</label>
-                    <InputText class="form-control" id="email" @bind-Value="employeeDto.Email" placeholder="@employee.Email" disabled/>
+                    <InputText class="form-control" id="email" @bind-Value="employeeDto.Email" disabled />
                 </div>
                 <div class="col-s-auto col-lg-4 mb-2">
                     <label for="phone">Phone</label>
-                    <InputText class="form-control" id="phone" @bind-Value="employeeDto.Phone" placeholder="@employee.Phone" disabled/>
+                    <InputText class="form-control" id="phone" @bind-Value="employeeDto.Phone" disabled />
                 </div>
             </div>
         </div>
@@ -47,7 +48,7 @@
         <div class="m-4 row w-75">
             <label for="role" class="text-primary ">Select Role</label>
             <InputSelect class="h5 list-group-item-secondary fw-bold col-s-10 col-md-auto col-l-2" id="role"
-                         @bind-Value="employeeDto.Role" placeholder="@employee.Role" disabled>
+                         @bind-Value="employeeDto.Role" disabled>
                 <option value="Employee">Employee</option>
                 <option value="Admin">Admin</option>
                 <option value="Manager">Manager</option>
@@ -72,8 +73,7 @@
         try
         {
             employee = await _data.GetEmployeeById(Id);
-            employeeDto.Birthdate = employee.Birthdate;
-            employeeDto.Role = employee.Role;
+            employeeDto = _mapper.Map<EmployeeDto>(employee);
         }
         catch (Exception) { }
     }
