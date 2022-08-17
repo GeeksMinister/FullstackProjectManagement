@@ -23,7 +23,7 @@
     public async Task<Currency> UpdateCurrency(int id, Currency currency)
     {
         string query = "UPDATE ExchangeRates SET CurrencyName = @CurrencyName, USD = @USD, EUR = @EUR, GBP = @GBP," +
-                                    "CAD = @CAD, CHF = @CHF, JPY = @JPY, UpdateDate = @UpdateDate WHERE Id = @Id";
+                        "CAD = @CAD, CHF = @CHF, JPY = @JPY, NOK = @NOK, DKK = @DKK, UpdateDate = @UpdateDate WHERE Id = @Id";
         var result = await _dbContext.LoadData<Currency, object>(query, currency);
         return result.FirstOrDefault()!;
     }

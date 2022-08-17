@@ -68,6 +68,14 @@
                             <td>JPY</td>
                             <td>@currency.JPY</td>
                         </tr>
+                        <tr>
+                            <td>NOK</td>
+                            <td>@currency.NOK</td>
+                        </tr>
+                        <tr>
+                            <td>DKK</td>
+                            <td>@currency.DKK</td>
+                        </tr>
                     </tbody>
                 </table>
                 index = currencies.IndexOf(currency);
@@ -130,6 +138,7 @@
             _config.GetValue<string>("CurrencyConverterAPI:USD_SEK,EUR_SEK") + apiKey,
             _config.GetValue<string>("CurrencyConverterAPI:GBP_SEK,CAD_SEK") + apiKey,
             _config.GetValue<string>("CurrencyConverterAPI:CHF_SEK,JPY_SEK") + apiKey,
+            _config.GetValue<string>("CurrencyConverterAPI:NOK_SEK,DKK_SEK") + apiKey
         };
     }
 
@@ -139,9 +148,11 @@
         var client = _clientFactory.CreateClient();
         JObject currency_json = JObject.Parse($"{{ \"updated\": \"{DateTime.Now}\"}}");
         currency_json.Merge((JObject.Parse($"{{ \"CurrencyName\": \"{currencies?[0].CurrencyName}\"}}")));
-        currency_json.Merge((JObject.Parse(await client.GetStringAsync(requestLinks[0]))));
-        currency_json.Merge((JObject.Parse(await client.GetStringAsync(requestLinks[1]))));
-        currency_json.Merge((JObject.Parse(await client.GetStringAsync(requestLinks[2]))));
+        foreach (var link in requestLinks)
+        {
+            currency_json.Merge((JObject.Parse(await client.GetStringAsync(link))));
+        }
+
         return currency_json;
     }
 

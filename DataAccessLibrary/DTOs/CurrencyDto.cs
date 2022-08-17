@@ -30,6 +30,14 @@
     [JsonPropertyName("JPY_SEK")]
     public double JPY { get; set; }
 
+    [DisplayName("NOK")]
+    [JsonPropertyName("NOK_SEK")]
+    public double NOK { get; set; }
+
+    [DisplayName("DKK")]
+    [JsonPropertyName("DKK_SEK")]
+    public double DKK { get; set; }
+
 
 }
 
