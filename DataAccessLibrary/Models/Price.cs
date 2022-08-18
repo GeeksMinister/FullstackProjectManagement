@@ -1,7 +1,9 @@
 ﻿public class Price
 {
-    public string CurrencyOne { get; set; } = string.Empty;
-    public string CurrencyTwo { get; set; } = string.Empty;
-    public decimal Amount { get; set; }
-    public decimal Result { get; set; }
+    public string FromCurrency { get; set; } = "USD";
+    public string ToCurrency { get; set; } = "SEK";
+
+    [Range(1, double.MaxValue, ErrorMessage = "Please type in the amount")]
+    public decimal Amount { get; set; } = 1;
+    public string Result { get; set; } = string.Empty;
 }

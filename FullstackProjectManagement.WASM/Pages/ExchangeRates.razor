@@ -8,48 +8,67 @@
 {
     <p class="text-danger">@error</p>
 }
+<h3 class="text-primary p-3 m-2">Exchange Rate Conversion</h3>
+<br />
+<br />
 <div class="container">
-    <div class="row">
-        <EditForm Model="price" @onclick="Exchange" class="card card-body bg-light mt-3">
+    <div><p class="font-monospace m-0 text-secondary fw-bold text-end ">Price Updated: @SEK.UpdateDate</p></div>
 
+    <EditForm Model="price" @onfocusin="Exchange" @onfocusout="Exchange" OnValidSubmit="Exchange"
+              class=" card card-body mt-3 ">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="col w-100 m-auto text-center">
 
-            <label for="currency-one">From</label>
-            <InputSelect @bind-Value="price.CurrencyOne">
-                <option>SEK</option>
-                <option>USD</option>
-                <option>EUR</option>
-                <option>GBP</option>
-                <option>CAD</option>
-                <option>CHF</option>
-                <option>JPY</option>
-                <option>NOK</option>
-                <option>DKK</option>
-            </InputSelect>
+            <div class="col-sm-8 col-lg-5 m-auto ">
+                <label class="mb-1 fw-bold" for="amount">Amount</label>
+                <InputNumber id="amount" min="1" @bind-Value="price.Amount" class="form-control text-center"/>
+            </div>
 
-            <label for="currency-two">To</label>
-            <InputSelect @bind-Value="price.CurrencyTwo">
-                <option>SEK</option>
-                <option>USD</option>
-                <option>EUR</option>
-                <option>GBP</option>
-                <option>CAD</option>
-                <option>CHF</option>
-                <option>JPY</option>
-                <option>NOK</option>
-                <option>DKK</option>
-            </InputSelect>
+            <div class="col-sm-8 col-lg-2 m-auto text-start">
+                <label class="mt-5 mb-1 fw-bold" for="currency-one">From</label>
+                <InputSelect @bind-Value="price.FromCurrency" @onclick="Exchange" class="form-select text-center">
+                    <option>SEK</option>
+                    <option>USD</option>
+                    <option>EUR</option>
+                    <option>GBP</option>
+                    <option>CAD</option>
+                    <option>CHF</option>
+                    <option>JPY</option>
+                    <option>NOK</option>
+                    <option>DKK</option>
+                </InputSelect>
+            </div>
 
-            <label for="amount">Amount</label>
-            <InputNumber id="amount" @bind-Value="price.Amount" />
+            <div class="col-sm-8 col-lg-2 m-auto text-start">
+                <label class="mt-5 mb-1 fw-bold" for="currency-two">To</label>
+                <InputSelect @bind-Value="price.ToCurrency" @onclick="Exchange" class="form-select text-center">
+                    <option>SEK</option>
+                    <option>USD</option>
+                    <option>EUR</option>
+                    <option>GBP</option>
+                    <option>CAD</option>
+                    <option>CHF</option>
+                    <option>JPY</option>
+                    <option>NOK</option>
+                    <option>DKK</option>
+                </InputSelect>
 
-            <label for="result">Result</label>
-            <InputNumber id="result" @bind-Value="@price.Result" disabled />
+            </div>
+        </div>
 
-            <button type="submit" class="btn btn-primary"></button>
+        <div class="mt-5 mb-5 text-center w-100 d-flex">
+            <p class="h5 text-primary p-3 border border-success border-1 m-auto">@($"{price.Amount:#.###}") 
+            @price.FromCurrency &nbsp;&nbsp;=&nbsp;&nbsp; @price.Result @price.ToCurrency</p>
+        </div>
 
-        </EditForm>
-    </div>
+        <div class="text-center m-auto w-100 ">
+            <button type="submit" class="btn btn-primary col-3 fw-bold ">Convert</button>
+        </div>
+
+    </EditForm>
 </div>
+
 
 @code {
     Price price = new Price();
@@ -60,14 +79,16 @@
     {
         var result = await _data.GetAllCurrencies();
         SEK = result.FirstOrDefault()!;
+        Exchange();
     }
 
     private void Exchange()
     {
         try
         {
-            var value = ExchangeToSEK(price.CurrencyOne, price.Amount);
-            price.Result = ExchangeCurrencies(price.CurrencyTwo, value);
+            var value = ExchangeToSEK(price.FromCurrency, price.Amount);
+            var result = ExchangeCurrencies(price.ToCurrency, value);
+            price.Result = $"{result:#.###}";
         }
         catch (Exception ex)
         {
@@ -110,7 +131,5 @@
             default: throw new Exception("Please choose from the available currencies");
         }
     }
-
-
 
 }
