@@ -10,35 +10,35 @@
     
     [DisplayName("USD")]
     [JsonPropertyName("USD_SEK")]
-    public double USD { get; set; }
+    public decimal USD { get; set; }
     
     [DisplayName("EUR")]
     [JsonPropertyName("EUR_SEK")]
-    public double EUR { get; set; }
+    public decimal EUR { get; set; }
     
     [JsonPropertyName("GBP_SEK")]
     [DisplayName("GBP")]
-    public double GBP { get; set; }
+    public decimal GBP { get; set; }
     
     [JsonPropertyName("CAD_SEK")]
     [DisplayName("CAD")]
-    public double CAD { get; set; }
+    public decimal CAD { get; set; }
 
     [JsonPropertyName("CHF_SEK")]
     [DisplayName("CHF")]
-    public double CHF { get; set; }
+    public decimal CHF { get; set; }
 
     [DisplayName("JPY")]
     [JsonPropertyName("JPY_SEK")]
-    public double JPY { get; set; }
+    public decimal JPY { get; set; }
 
     [DisplayName("NOK")]
     [JsonPropertyName("NOK_SEK")]
-    public double NOK { get; set; }
+    public decimal NOK { get; set; }
 
     [DisplayName("DKK")]
     [JsonPropertyName("DKK_SEK")]
-    public double DKK { get; set; }
+    public decimal DKK { get; set; }
 
 }
 

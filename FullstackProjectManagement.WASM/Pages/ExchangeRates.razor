@@ -1,15 +1,116 @@
 ﻿@page "/ExchangeRates"
+@inject ICurrencyClientData _data
+@attribute [Authorize(Roles = "Admin")]
 
 <PageTitle>Exchange Rates</PageTitle>
 
+@if (error is not null)
+{
+    <p class="text-danger">@error</p>
+}
 <div class="container">
     <div class="row">
-        @*<EditForm class="card card-body bg-light mt-3">
-            <fieldset class="w-100">
-                <InputSelect>
-                    <option>
-                </InputSelect>
-            </fieldset>
-        </EditForm>*@
+        <EditForm Model="price" @onclick="Exchange" class="card card-body bg-light mt-3">
+
+
+            <label for="currency-one">From</label>
+            <InputSelect @bind-Value="price.CurrencyOne">
+                <option>SEK</option>
+                <option>USD</option>
+                <option>EUR</option>
+                <option>GBP</option>
+                <option>CAD</option>
+                <option>CHF</option>
+                <option>JPY</option>
+                <option>NOK</option>
+                <option>DKK</option>
+            </InputSelect>
+
+            <label for="currency-two">To</label>
+            <InputSelect @bind-Value="price.CurrencyTwo">
+                <option>SEK</option>
+                <option>USD</option>
+                <option>EUR</option>
+                <option>GBP</option>
+                <option>CAD</option>
+                <option>CHF</option>
+                <option>JPY</option>
+                <option>NOK</option>
+                <option>DKK</option>
+            </InputSelect>
+
+            <label for="amount">Amount</label>
+            <InputNumber id="amount" @bind-Value="price.Amount" />
+
+            <label for="result">Result</label>
+            <InputNumber id="result" @bind-Value="@price.Result" disabled />
+
+            <button type="submit" class="btn btn-primary"></button>
+
+        </EditForm>
     </div>
 </div>
+
+@code {
+    Price price = new Price();
+    Currency SEK = new Currency();
+    string? error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await _data.GetAllCurrencies();
+        SEK = result.FirstOrDefault()!;
+    }
+
+    private void Exchange()
+    {
+        try
+        {
+            var value = ExchangeToSEK(price.CurrencyOne, price.Amount);
+            price.Result = ExchangeCurrencies(price.CurrencyTwo, value);
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+        }
+    }
+
+    private decimal ExchangeToSEK(string currency, decimal value)
+    {
+        switch (currency)
+        {
+            case "SEK": return value;
+            case "USD": return value * SEK.USD;
+            case "EUR": return value * SEK.EUR;
+            case "GBP": return value * SEK.GBP;
+            case "CAD": return value * SEK.CAD;
+            case "CHF": return value * SEK.CHF;
+            case "JPY": return value * SEK.JPY;
+            case "NOK": return value * SEK.NOK;
+            case "DKK": return value * SEK.DKK;
+
+            default: throw new Exception("Please choose from the available currencies");
+        }
+    }
+
+    private decimal ExchangeCurrencies(string currency, decimal value)
+    {
+        switch (currency)
+        {
+            case "SEK": return value;
+            case "USD": return value / SEK.USD;
+            case "EUR": return value / SEK.EUR;
+            case "GBP": return value / SEK.GBP;
+            case "CAD": return value / SEK.CAD;
+            case "CHF": return value / SEK.CHF;
+            case "JPY": return value / SEK.JPY;
+            case "NOK": return value / SEK.NOK;
+            case "DKK": return value / SEK.DKK;
+
+            default: throw new Exception("Please choose from the available currencies");
+        }
+    }
+
+
+
+}
