@@ -4,6 +4,13 @@
 
 <PageTitle>Exchange Rates</PageTitle>
 
+<style>
+    .exchange-container {
+        background: url('/resources/images/forex-2.jpg') no-repeat;
+        background-size: cover;
+    }
+</style>
+
 @if (error is not null)
 {
     <p class="text-danger">@error</p>
@@ -11,15 +18,14 @@
 <h3 class="text-primary p-3 m-2">Exchange Rate Conversion</h3>
 <br />
 <br />
-<div class="container">
-    <div><p class="font-monospace m-0 text-secondary fw-bold text-end ">Price Updated: @SEK.UpdateDate</p></div>
+    <div><p class="font-monospace m-2 text-primary fw-bold text-end small">Price Updated: @SEK.UpdateDate</p></div>
+<div class="container exchange-container text-black">
 
     <EditForm Model="price" @onfocusin="Exchange" @onfocusout="Exchange" OnValidSubmit="Exchange"
-              class=" card card-body mt-3 ">
+              class="mt-4 p-3 exchange-form">
         <DataAnnotationsValidator />
         <ValidationSummary />
         <div class="col w-100 m-auto text-center">
-
             <div class="col-sm-8 col-lg-5 m-auto ">
                 <label class="mb-1 fw-bold" for="amount">Amount</label>
                 <InputNumber id="amount" min="1" @bind-Value="price.Amount" class="form-control text-center"/>
@@ -58,12 +64,12 @@
         </div>
 
         <div class="mt-5 mb-5 text-center w-100 d-flex">
-            <p class="h5 text-primary p-3 border border-success border-1 m-auto">@($"{price.Amount:#.###}") 
+            <p class="h5 text-light p-3 border  m-auto bg-dark">@($"{price.Amount:#.###}") 
             @price.FromCurrency &nbsp;&nbsp;=&nbsp;&nbsp; @price.Result @price.ToCurrency</p>
         </div>
 
-        <div class="text-center m-auto w-100 ">
-            <button type="submit" class="btn btn-primary col-3 fw-bold ">Convert</button>
+        <div class="text-center m-auto w-100">
+            <button type="submit" class="btn btn-dark btn-outline-light col-3 fw-bold mb-3">Convert</button>
         </div>
 
     </EditForm>
