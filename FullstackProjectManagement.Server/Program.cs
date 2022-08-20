@@ -4,17 +4,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-builder.Services.AddRefitClient<ICurrencyClientData>().ConfigureHttpClient(
-    client =>client.BaseAddress = new Uri("https://localhost:7128"));
-
-builder.Services.AddRefitClient<IEmployeeClientData>().ConfigureHttpClient(
-    client =>client.BaseAddress = new Uri("https://localhost:7128"));
-
-builder.Services.AddRefitClient<ITodoClientData>().ConfigureHttpClient(
-    client =>client.BaseAddress = new Uri("https://localhost:7128"));
-
-builder.Services.AddRefitClient<IProjectClientData>().ConfigureHttpClient(
-    client =>client.BaseAddress = new Uri("https://localhost:7128"));
+var apiLocation = builder.Configuration["ApiLocation"]!;
+builder.Services.AddRefitClient<ICurrencyClientData>().ConfigureHttpClient(client => client.BaseAddress = new Uri(apiLocation));
+builder.Services.AddRefitClient<IEmployeeClientData>().ConfigureHttpClient(client => client.BaseAddress = new Uri(apiLocation));
+builder.Services.AddRefitClient<ITodoClientData>().ConfigureHttpClient(client => client.BaseAddress = new Uri(apiLocation));
+builder.Services.AddRefitClient<IProjectClientData>().ConfigureHttpClient(client => client.BaseAddress = new Uri(apiLocation));
 
 builder.Services.AddAutoMapper(typeof(MapperInitializer));
 builder.Services.AddSingleton<ISQLiteDataAccess, SQLiteDataAccess>();

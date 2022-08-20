@@ -101,7 +101,7 @@
     {
         try
         {
-            var currencyData = RestService.For<ICurrencyClientData>("https://localhost:7128");
+            var currencyData = RestService.For<ICurrencyClientData>(_config["ApiLocation"]!);
             var result = await currencyData.GetAllCurrencies();
             currencies = result.ToList();
         }
