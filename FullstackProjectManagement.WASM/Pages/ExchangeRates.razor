@@ -6,8 +6,8 @@
 
 <style>
     .exchange-container {
-        background: url('/resources/images/forex-2.jpg') no-repeat;
-        background-size: cover;
+        background: url('/resources/images/forex-1-cropped.jpg') repeat;
+        background-size: 55%;
     }
 </style>
 
@@ -15,24 +15,24 @@
 {
     <p class="text-danger">@error</p>
 }
-<h3 class="text-primary p-3 m-2">Exchange Rate Conversion</h3>
+<h3 class="text-primary p-0 m-0">Exchange Rate Conversion</h3>
 <br />
 <br />
-    <div><p class="font-monospace m-2 text-primary fw-bold text-end small">Price Updated: @SEK.UpdateDate</p></div>
-<div class="container exchange-container text-black">
+    <div><p class="font-monospace m-1 text-primary fw-bold text-end small">Price Updated: @SEK.UpdateDate</p></div>
+<div class="container exchange-container text-black mt-0 mb-5">
 
     <EditForm Model="price" @onfocusin="Exchange" @onfocusout="Exchange" OnValidSubmit="Exchange"
-              class="mt-4 p-3 exchange-form">
+              class="mt-1 p-2 exchange-form">
         <DataAnnotationsValidator />
         <ValidationSummary />
         <div class="col w-100 m-auto text-center">
-            <div class="col-sm-8 col-lg-5 m-auto ">
-                <label class="mb-1 fw-bold" for="amount">Amount</label>
-                <InputNumber id="amount" min="1" @bind-Value="price.Amount" class="form-control text-center"/>
+            <div class="col-sm-8 col-lg-5 m-auto h4">
+                <label class="mb-1 fw-bold text-light" for="amount">Amount</label>
+                <InputNumber id="amount" min="1" @bind-Value="price.Amount" class="form-control text-center fw-bold"/>
             </div>
 
             <div class="col-sm-8 col-lg-2 m-auto text-start">
-                <label class="mt-5 mb-1 fw-bold" for="currency-one">From</label>
+                <label class="mt-5 mb-1 fw-bold text-light h5" for="currency-one">From</label>
                 <InputSelect @bind-Value="price.FromCurrency" @onclick="Exchange" class="form-select text-center">
                     <option>SEK</option>
                     <option>USD</option>
@@ -45,9 +45,12 @@
                     <option>DKK</option>
                 </InputSelect>
             </div>
-
+            <div class="col-sm-8 col-lg-2 m-auto mt-4 mb-2">
+                <img src="/resources/images/reverse-1.png" height="50" 
+                     class="border-2 border-success bg-white bg-opacity-75 p-1 btn " @onclick="ReverseCurrencies"/>
+            </div>
             <div class="col-sm-8 col-lg-2 m-auto text-start">
-                <label class="mt-5 mb-1 fw-bold" for="currency-two">To</label>
+                <label class="mt-1 mb-1 fw-bold text-light h4" for="currency-two">To</label>
                 <InputSelect @bind-Value="price.ToCurrency" @onclick="Exchange" class="form-select text-center">
                     <option>SEK</option>
                     <option>USD</option>
@@ -64,12 +67,12 @@
         </div>
 
         <div class="mt-5 mb-5 text-center w-100 d-flex">
-            <p class="h5 text-light p-3 border  m-auto bg-dark">@($"{price.Amount:#.###}") 
+            <p class="h5 text-light p-3 border m-auto bg-dark rounded-3">@($"{price.Amount:#.###}") 
             @price.FromCurrency &nbsp;&nbsp;=&nbsp;&nbsp; @price.Result @price.ToCurrency</p>
         </div>
 
         <div class="text-center m-auto w-100">
-            <button type="submit" class="btn btn-dark btn-outline-light col-3 fw-bold mb-3">Convert</button>
+            <button type="submit" class="btn btn-dark btn-outline-light col-3 fw-bold mb-3 rounded-pill">Convert</button>
         </div>
 
     </EditForm>
@@ -136,6 +139,15 @@
 
             default: throw new Exception("Please choose from the available currencies");
         }
+    }
+
+    private void ReverseCurrencies()
+    {
+        var first = price.FromCurrency;
+        var sedond = price.ToCurrency;
+        price.ToCurrency = first;
+        price.FromCurrency = sedond;
+        Exchange();
     }
 
 }
