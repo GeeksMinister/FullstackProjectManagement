@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/FullstackProjectManagement.API/Properties/ServiceDependencies/Fullstack-Project-Management-API - Zip Deploy
+/FullstackProjectManagement.Server/Properties/ServiceDependencies/Fullstack-Project-Management-Server - Web Deploy

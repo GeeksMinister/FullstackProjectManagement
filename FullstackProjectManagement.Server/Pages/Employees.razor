@@ -4,6 +4,10 @@
 <PageTitle>Employees</PageTitle>
 
 <div class="container-fluid p-3">
+    @if (error is not null)
+    {
+        <p class="text-danger">@error</p>
+    }
     @if (employees is null)
     {
         <em class="h3">Loading ......</em>
@@ -14,13 +18,13 @@
     }
     else
     {
-    <div class="row pt-4">
-        <h4 class="text-primary fw-light col-6">Registered Employees <span class="small">(@employees.Count)</span></h4>
-        <div class=" text-end">
-            <a href="Addemployee" class="btn btn-success fw-bold">Assgin Employee</a>
+        <div class="row pt-4">
+            <h4 class="text-primary fw-light col-6">Registered Employees <span class="small">(@employees.Count)</span></h4>
+            <div class=" text-end">
+                <a href="Addemployee" class="btn btn-success fw-bold">Assgin Employee</a>
+            </div>
         </div>
-    </div>
-    <br />
+        <br />
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr class="border-5">
@@ -58,21 +62,25 @@
 
 @code {
     List<Employee>? employees;
+    string? error;
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadEmployee();
+        try
+        {
+            await LoadEmployee();
+        }
+        catch (Exception e) 
+        { 
+            error = e.Message; 
+        }
     }
 
     private async Task LoadEmployee()
     {
-        try
-        {
-            var result = await _data.GetAllEmployees();
-            if (result == null) return;
-            employees = result.ToList();
-        }
-        catch (Exception) { }
+        var result = await _data.GetAllEmployees();
+        if (result == null) return;
+        employees = result.ToList();
     }
 
 

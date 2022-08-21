@@ -1,6 +1,6 @@
 ﻿@page "/ExchangeRates"
 @inject ICurrencyClientData _data
-@attribute [Authorize(Roles = "Admin")]
+@attribute [Authorize(Roles = "Admin, Employee, Manager")]
 
 <PageTitle>Exchange Rates</PageTitle>
 

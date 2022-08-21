@@ -29,7 +29,7 @@ public class AuthenticationService : IAuthenticationService
 		var jsonString = JsonConvert.SerializeObject(jsonValues);
 		StringContent httpContentData = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
-		string location = _config["ApiLocation"]!;
+		string location = _config["ApiLocation"]! + "/Login";
 		var authResult = await _client.PostAsync(location, httpContentData);
 		var resultContent = await authResult.Content.ReadAsStringAsync();
 

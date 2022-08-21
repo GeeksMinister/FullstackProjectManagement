@@ -4,11 +4,14 @@
 
 
 <EditForm Model="@loginModel" OnValidSubmit="ExecuteLogin">
-    @if (showAuthenticationError)
-    {
-        <em>@authenticationErrorText</em>
-    }
     <div class="row m-2">
+        @if (authenticationErrorText is not null)
+        {
+            <div class="col-auto m-2">
+                <label for="error" class="visually-hidden">Error</label>
+                <em class="text-danger">@authenticationErrorText</em>
+            </div>
+        }
         <div class="col-auto">
             <label for="id" class="visually-hidden">Id</label>
             <InputText id="id" class="form-control" @bind-Value="loginModel.LoginInfo" placeholder="ID Or Email" />
@@ -28,23 +31,27 @@
 @code {
     private AuthenticationUserModel loginModel = new();
 
-    private bool showAuthenticationError = false;
     private string authenticationErrorText = "";
 
     private async Task ExecuteLogin()
     {
-        showAuthenticationError = false;
-
-        AuthenticatedUserModel? result = await AuthService.Login(loginModel);
-
-        if (result is not null)
+        try
         {
-            NavManager.NavigateTo("/");
+            AuthenticatedUserModel? result = await AuthService.Login(loginModel);
+
+            if (result is not null)
+            {
+                NavManager.NavigateTo("/");
+            }
+            else
+            {
+                authenticationErrorText = "Please check in your login info and password.";
+            }
+
         }
-        else
+        catch (Exception)
         {
-            authenticationErrorText = "There was an error when trying to log in.";
-            showAuthenticationError = true;
+            authenticationErrorText = "Faild to contact the server. Check your connection";
         }
     }
 

@@ -7,18 +7,14 @@
     <Authorized>
         <h3>Registered Tasks for @context.User.FindFirst(ClaimTypes.Name)!.Value </h3>
         <div class="container-fluid p-1">
-            <div class="text-end m-0">
-                <a href="@($"AddTask/{EmployeeId}")" class="btn btn-success fw-bold m-0 me-1  p-3">Add Task</a>
-            </div>
             @if (tasks is null)
-            {
-                <em class="h3">Loading ......</em>
-            }
-            else if (tasks?.Any() == false)
             {
                 <p>No Task Was Found or Returned From Database</p>
             }
-            else
+            <div class="text-end m-0">
+                <a href="@($"AddTask/{EmployeeId}")" class="btn btn-success fw-bold m-0 me-1  p-3">Add Task</a>
+            </div>
+            @if (tasks?.Any() == true)
             {
                 <div class="row pt-4">
                     <h4 class="text-primary fw-light col-6">Tasks to do <span class="small">(@tasks?.Count)</span></h4>
@@ -75,24 +71,24 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var authState = await AuthState!;
-        if (authState.User.Identity!.IsAuthenticated)
+        try
         {
-            EmployeeId = authState.User.FindFirst(ClaimTypes.SerialNumber)!.Value;
+            var authState = await AuthState!;
+            if (authState.User.Identity!.IsAuthenticated)
+            {
+                EmployeeId = authState.User.FindFirst(ClaimTypes.SerialNumber)!.Value;
 
-            await LoadTasks();
+                await LoadTasks();
+            }
         }
+        catch (Exception) { }
     }
 
     private async Task LoadTasks()
     {
-        try
-        {
-            var result = await _data.GetEmployeeTasks(EmployeeId);
-            if (result == null) return;
-            tasks = result.ToList();
-        }
-        catch (Exception) { }
+        var result = await _data.GetEmployeeTasks(EmployeeId);
+        if (result == null) return;
+        tasks = result.ToList();
     }
 
 }

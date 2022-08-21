@@ -19,7 +19,7 @@
     </div>
     @if (error is not null)
     {
-        <p>@error</p>
+        <p class="text-danger">@error</p>
     }
     @if (currencies is null)
     {
@@ -90,7 +90,7 @@
     private List<Currency>? currencies;
     int index;
     string? error;
-
+    
     protected override async Task OnInitializedAsync()
     {
         await PrintExchangeRates();
@@ -101,7 +101,7 @@
     {
         try
         {
-            var currencyData = RestService.For<ICurrencyClientData>("https://localhost:7128");
+            var currencyData = RestService.For<ICurrencyClientData>(_config["ApiLocation"]!);
             var result = await currencyData.GetAllCurrencies();
             currencies = result.ToList();
         }

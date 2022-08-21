@@ -13,14 +13,12 @@ builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddAutoMapper(typeof(MapperInitializer));
 
-builder.Services.AddRefitClient<ICurrencyClientData>().ConfigureHttpClient(
-    client => client.BaseAddress = new Uri("https://localhost:7128"));
-builder.Services.AddRefitClient<IEmployeeClientData>().ConfigureHttpClient(
-    client => client.BaseAddress = new Uri("https://localhost:7128"));
-builder.Services.AddRefitClient<ITodoClientData>().ConfigureHttpClient(
-    client => client.BaseAddress = new Uri("https://localhost:7128"));
-builder.Services.AddRefitClient<IProjectClientData>().ConfigureHttpClient(
-    client => client.BaseAddress = new Uri("https://localhost:7128"));
+var apiLocation = builder.Configuration["ApiLocation"]!;
+builder.Services.AddRefitClient<ICurrencyClientData>().ConfigureHttpClient(client => client.BaseAddress = new Uri(apiLocation));
+builder.Services.AddRefitClient<IEmployeeClientData>().ConfigureHttpClient(client => client.BaseAddress = new Uri(apiLocation));
+builder.Services.AddRefitClient<IProjectClientData>().ConfigureHttpClient(client => client.BaseAddress = new Uri(apiLocation));
+builder.Services.AddRefitClient<ITodoClientData>().ConfigureHttpClient(client => client.BaseAddress = new Uri(apiLocation));
+
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 await builder.Build().RunAsync();
