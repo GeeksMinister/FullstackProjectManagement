@@ -1,4 +1,5 @@
-﻿
+﻿namespace DataAccessLibrary.Data.EmployeeData;
+
 public interface IEmployeeData
 {
     Task<IEnumerable<Employee>> GetAllEmployees();

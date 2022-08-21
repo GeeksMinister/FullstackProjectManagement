@@ -1,4 +1,6 @@
-﻿public class UserStoryDto
+﻿namespace DataAccessLibrary.DTOs;
+
+public class UserStoryDto
 {
     [Required]
     [DisplayName("Name")]

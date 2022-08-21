@@ -1,4 +1,6 @@
-﻿public interface IEmployeeClientData
+﻿namespace DataAccessLibrary.RefitClient;
+
+public interface IEmployeeClientData
 {
     [Get("/Employee")]
     Task<IEnumerable<Employee>> GetAllEmployees();

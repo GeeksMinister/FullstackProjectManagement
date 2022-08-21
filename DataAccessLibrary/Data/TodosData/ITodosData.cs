@@ -1,4 +1,6 @@
-﻿public interface ITodoData
+﻿namespace DataAccessLibrary.Data.TodosData;
+
+public interface ITodoData
 {
     Task DeleteTask(string Id);
     Task<IEnumerable<Todo>> GetAllTasks();

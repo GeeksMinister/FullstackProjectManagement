@@ -1,4 +1,6 @@
-﻿public class TodoData : ITodoData
+﻿namespace DataAccessLibrary.Data.TodosData;
+
+public class TodoData : ITodoData
 {
     private readonly ISQLiteDataAccess _dbContext;
 

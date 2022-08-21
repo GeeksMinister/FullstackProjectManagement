@@ -1,4 +1,6 @@
-﻿public class Todo
+﻿namespace DataAccessLibrary.Models;
+
+public class Todo
 {
     [StringLength(36)]
     public string Id { get; set; } = Guid.NewGuid().ToString();

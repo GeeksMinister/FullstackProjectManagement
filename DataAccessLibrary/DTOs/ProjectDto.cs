@@ -1,4 +1,6 @@
-﻿public class ProjectDto
+﻿namespace DataAccessLibrary.DTOs;
+
+public class ProjectDto
 {
     [StringLength(50)]
     public string ProjectName { get; set; } = string.Empty;

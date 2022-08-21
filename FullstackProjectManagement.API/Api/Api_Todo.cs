@@ -1,4 +1,6 @@
-﻿public static class Api_Todo
+﻿namespace FullstackProjectManagement.API.Api;
+
+public static class Api_Todo
 {
     public static void ConfigureApiEmployeeTasks(this WebApplication app)
     {

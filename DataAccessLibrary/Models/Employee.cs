@@ -1,4 +1,6 @@
-﻿public class Employee
+﻿namespace DataAccessLibrary.Models;
+
+public class Employee
 {
     [StringLength(36)]
     public string Id { get; set; } = Guid.NewGuid().ToString();

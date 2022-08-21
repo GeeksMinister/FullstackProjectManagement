@@ -1,4 +1,6 @@
-﻿public class Project
+﻿namespace DataAccessLibrary.Models;
+
+public class Project
 {
     [StringLength(36)]
     public string Id { get; set; } = Guid.NewGuid().ToString();

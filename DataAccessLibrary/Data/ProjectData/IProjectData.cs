@@ -1,4 +1,5 @@
-﻿
+﻿namespace DataAccessLibrary.Data.ProjectData;
+
 public interface IProjectData
 {
     Task DeleteProject(string Id);

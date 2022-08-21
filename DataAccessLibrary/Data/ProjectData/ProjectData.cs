@@ -1,4 +1,6 @@
-﻿public class ProjectData : IProjectData
+﻿namespace DataAccessLibrary.Data.ProjectData;
+
+public class ProjectData : IProjectData
 {
     private readonly ISQLiteDataAccess _dbContext;
 

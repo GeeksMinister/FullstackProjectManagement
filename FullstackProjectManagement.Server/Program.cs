@@ -11,8 +11,6 @@ builder.Services.AddRefitClient<IProjectClientData>().ConfigureHttpClient(client
 builder.Services.AddRefitClient<ITodoClientData>().ConfigureHttpClient(client => client.BaseAddress = new Uri(apiLocation));
 
 builder.Services.AddAutoMapper(typeof(MapperInitializer));
-builder.Services.AddSingleton<ISQLiteDataAccess, SQLiteDataAccess>();
-builder.Services.AddSingleton<ICurrencyData, CurrencyData>();
 
 var app = builder.Build();
 

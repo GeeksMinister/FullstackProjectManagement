@@ -1,4 +1,6 @@
-﻿public class EmployeeDto
+﻿namespace DataAccessLibrary.DTOs;
+
+public class EmployeeDto
 {
     [Required]
     [StringLength(50)]

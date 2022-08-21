@@ -18,3 +18,12 @@ global using Microsoft.Extensions.Configuration;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
+
+global using DataAccessLibrary.DTOs;
+global using DataAccessLibrary.Models;
+global using DataAccessLibrary.DbAccess;
+global using DataAccessLibrary.Data.TodosData;
+global using DataAccessLibrary.Data.ProjectData;
+global using DataAccessLibrary.Data.EmployeeData;
+global using DataAccessLibrary.Data.CurrencyData;
+global using DataAccessLibrary.Data.UserStoryData;

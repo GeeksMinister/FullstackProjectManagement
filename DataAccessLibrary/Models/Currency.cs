@@ -1,4 +1,6 @@
-﻿public sealed class Currency
+﻿namespace DataAccessLibrary.Models;
+
+public sealed class Currency
 {
     public int Id { get; set; }
 

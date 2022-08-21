@@ -1,4 +1,6 @@
-﻿public class UserStory
+﻿namespace DataAccessLibrary.Models;
+
+public class UserStory
 {
     [StringLength(36)]
     public string Id { get; set; } = Guid.NewGuid().ToString();

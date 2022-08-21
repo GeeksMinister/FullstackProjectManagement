@@ -1,4 +1,6 @@
-﻿public class UserStoryData : IUserStoryData
+﻿namespace DataAccessLibrary.Data.UserStoryData;
+
+public class UserStoryData : IUserStoryData
 {
     private readonly ISQLiteDataAccess _dbContext;
 

@@ -1,4 +1,6 @@
-﻿public static class Api_UserStory
+﻿namespace FullstackProjectManagement.API.Api;
+
+public static class Api_UserStory
 {
     public static void ConfigureApiUserStory(this WebApplication app)
     {

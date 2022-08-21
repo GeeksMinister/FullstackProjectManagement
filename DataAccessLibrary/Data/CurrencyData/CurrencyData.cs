@@ -1,4 +1,6 @@
-﻿public class CurrencyData : ICurrencyData
+﻿namespace DataAccessLibrary.Data.CurrencyData;
+
+public class CurrencyData : ICurrencyData
 {
     private readonly ISQLiteDataAccess _dbContext;
 

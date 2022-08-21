@@ -1,4 +1,6 @@
-﻿public static class Api_Project
+﻿namespace FullstackProjectManagement.API.Api;
+
+public static class Api_Project
 {
     public static void ConfigureApiProject(this WebApplication app)
     {

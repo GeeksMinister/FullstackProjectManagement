@@ -1,4 +1,6 @@
-﻿public class EmployeeData : IEmployeeData
+﻿namespace DataAccessLibrary.Data.EmployeeData;
+
+public class EmployeeData : IEmployeeData
 {
     private readonly ISQLiteDataAccess _dbContext;
 

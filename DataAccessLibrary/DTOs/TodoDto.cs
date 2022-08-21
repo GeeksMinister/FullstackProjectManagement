@@ -1,4 +1,6 @@
-﻿public class TodoDto
+﻿namespace DataAccessLibrary.DTOs;
+
+public class TodoDto
 {
     [Required]
     [DisplayName("Name")]

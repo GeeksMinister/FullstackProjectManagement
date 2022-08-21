@@ -1,4 +1,6 @@
-﻿public interface ITodoClientData
+﻿namespace DataAccessLibrary.RefitClient;
+
+public interface ITodoClientData
 {
     [Get("/Task")]
     Task<List<Todo>> GetAllTasks();

@@ -1,4 +1,5 @@
-﻿
+﻿namespace DataAccessLibrary.Data.CurrencyData;
+
 public interface ICurrencyData
 {
     Task<IEnumerable<Currency>> GetAllCurrencies();

@@ -1,4 +1,6 @@
-﻿public interface ICurrencyClientData
+﻿namespace DataAccessLibrary.RefitClient;
+
+public interface ICurrencyClientData
 {
     [Get("/ExchangeRates")]
     Task<IEnumerable<Currency>> GetAllCurrencies();

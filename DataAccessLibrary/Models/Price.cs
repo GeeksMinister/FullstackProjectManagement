@@ -1,4 +1,6 @@
-﻿public class Price
+﻿namespace DataAccessLibrary.Models;
+
+public class Price
 {
     public string FromCurrency { get; set; } = "USD";
     public string ToCurrency { get; set; } = "SEK";

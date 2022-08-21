@@ -1,4 +1,6 @@
-﻿public sealed class CurrencyDto
+﻿namespace DataAccessLibrary.DTOs;
+
+public sealed class CurrencyDto
 {
     [JsonPropertyName("CurrencyName")]
     public string CurrencyName { get; set; } = string.Empty;

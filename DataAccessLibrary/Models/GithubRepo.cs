@@ -1,4 +1,6 @@
-﻿public class GithubRepo
+﻿namespace DataAccessLibrary.Models;
+
+public class GithubRepo
 {
     [JsonPropertyName("name")]
     public string? Name { get; set; }

@@ -1,3 +1,6 @@
+global using FullstackProjectManagement.API.Api;
+
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

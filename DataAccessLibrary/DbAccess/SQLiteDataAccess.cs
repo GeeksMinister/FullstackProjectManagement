@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using Microsoft.Data.Sqlite;
 
+namespace DataAccessLibrary.DbAccess;
+
 public class SQLiteDataAccess : ISQLiteDataAccess
 {
     private readonly IConfiguration _config;

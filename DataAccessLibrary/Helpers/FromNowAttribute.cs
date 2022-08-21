@@ -1,10 +1,12 @@
-﻿public class FromNowAttribute : ValidationAttribute
+﻿namespace DataAccessLibrary.Helpers;
+
+public class FromNowAttribute : ValidationAttribute
 {
     public FromNowAttribute() { }
 
     public string GetErrorMessage() => "Employee must be between 18 - 100 years old";
 
-    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
     {
         int years = Convert.ToDateTime(value).Year;
         int age = DateTime.Now.Year - years;
@@ -15,7 +17,7 @@
         }
         else
         {
-            return ValidationResult.Success;
+            return ValidationResult.Success!;
         }        
     }
 }

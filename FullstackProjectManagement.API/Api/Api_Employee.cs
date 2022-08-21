@@ -1,4 +1,6 @@
-﻿public static class Api_Employee
+﻿namespace FullstackProjectManagement.API.Api;
+
+public static class Api_Employee
 {
     public static void ConfigureApiEmployee(this WebApplication app)
     {
