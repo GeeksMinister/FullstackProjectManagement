@@ -3,10 +3,38 @@
 public class EmployeeData : IEmployeeData
 {
     private readonly ISQLiteDataAccess _dbContext;
+    private readonly IConfiguration _config;
 
-    public EmployeeData(ISQLiteDataAccess dbContext)
+    public EmployeeData(ISQLiteDataAccess dbContext, IConfiguration config )
     {
         _dbContext = dbContext;
+        _config = config;
+    }
+
+    public async Task<Employee> GetAllInfo(string id)
+    {
+        string query = "SELECT Employee.Id, Employee.FirstName, Employee.LastName, Employee.Birthdate," +
+" Employee.Phone, Employee.Email, Employee.City, Employee.Role, Todo.Id, Todo.TaskName, Todo.Description," +
+" Todo.Priority, Todo.Status, Todo.EmployeeId, Todo.ProjectId, Project.Id, Project.ProjectName," +
+" Project.Description, Project.Customer, Project.Status" +
+" FROM Employee JOIN Todo ON Employee.Id = Todo.EmployeeId" +
+" JOIN Project ON Todo.ProjectId = Project.Id" +
+" WHERE Employee.Id = @Id";
+
+        using IDbConnection connection = new SqliteConnection(_config.GetConnectionString("Default"));
+        List<Todo> temp_todos = new List<Todo>();
+        var result = await connection.QueryAsync<Employee, Todo, Project, Employee >(query, (emp, todo, proj) =>
+        {
+            todo.Employee ??= emp;
+            todo.Project ??= proj;
+
+            temp_todos.Add(todo);
+            return emp;
+        }, new { Id = id });
+
+        var employe = result.FirstOrDefault();
+        employe!.Todos = temp_todos;
+        return employe;
     }
 
     public async Task<IEnumerable<Employee>> GetAllEmployees()

@@ -6,12 +6,27 @@ public static class Api_Employee
     {
         app.MapPost("/Login", Login);
         app.MapGet("/Employee", GetAllEmployees);
+        app.MapGet("/AllInfo/{id}", GetAllInfo);
         app.MapGet("/Employee/{id}", GetEmployeeById);
         app.MapPost("/Employee", InsertEmployee);
         app.MapPut("/Employee/{id}", UpdateEmployee);
         app.MapDelete("/Employee", DeleteEmployee);
         app.MapGet("/ExchangeRates", GetAllCurrencies);
         app.MapPut("/ExchangeRates/{id}", UpdateCurrency);
+    }
+
+    private static async Task<IResult> GetAllInfo(string id, IEmployeeData employeeData)
+    {
+        try
+        {
+            var result = await employeeData.GetAllInfo(id);
+            if (result == null) return Results.NotFound();
+            return Results.Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return Results.Problem(ex.Message);
+        }
     }
 
     private static async Task<IResult> Login(AuthenticationUserModel authModel, IConfiguration config, IEmployeeData data, HttpContext http)

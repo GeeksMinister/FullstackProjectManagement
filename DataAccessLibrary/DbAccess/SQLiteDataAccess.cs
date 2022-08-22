@@ -1,7 +1,4 @@
-﻿using Dapper;
-using Microsoft.Data.Sqlite;
-
-namespace DataAccessLibrary.DbAccess;
+﻿namespace DataAccessLibrary.DbAccess;
 
 public class SQLiteDataAccess : ISQLiteDataAccess
 {

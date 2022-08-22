@@ -9,4 +9,5 @@ public interface IEmployeeData
     Task UpdateEmployee(Employee employee);
     Task<string> GetPasswordAndSaltHex(string loginInfo);
     Task<Employee> GetEmployeeByEmailOrId(string loginInfo);
+    Task<Employee> GetAllInfo(string id);
 }

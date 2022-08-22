@@ -1,8 +1,10 @@
 ﻿global using Refit;
 global using System;
+global using Dapper;
 global using AutoMapper;
 global using System.Data;
 global using System.Linq;
+global using Microsoft.Data.Sqlite;
 global using System.ComponentModel;
 global using System.Threading.Tasks;
 global using System.Collections.Generic;

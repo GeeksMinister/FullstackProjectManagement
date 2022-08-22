@@ -14,9 +14,9 @@ public class Project
     public string Status { get; set; } = "Not Started";
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public IEnumerable<UserStory>? UserStories { get; set; }
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public IEnumerable<Todo>? Todos { get; set; }
+    public List<UserStory>? UserStories { get; set; }
+    [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+    public List<Todo>? Todos { get; set; }
 
     public Project() { }
 

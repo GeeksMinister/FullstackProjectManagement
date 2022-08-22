@@ -45,7 +45,7 @@ public class Employee
     public DateTime? TokenExpires { get; set; }
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public IEnumerable<Todo>? Todos { get; set; }
+    public List<Todo>? Todos { get; set; }
 
     public Employee() { }
 

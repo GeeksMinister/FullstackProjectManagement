@@ -19,11 +19,13 @@ public class Todo
     public Employee Employee { get; set; } = new Employee();
     [StringLength(36)]
     public string EmployeeId { get; set; } = string.Empty;
-    //Nullable since a task doesn't always need to be attached to a project
-    [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-    public Project? Project { get; set; }
+
     [StringLength(36)]
     public string? ProjectId { get; set; }
+
+    //Nullable since a task doesn't always need to be attached to a project
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Project? Project { get; set; }
 
     public Todo()
     {
