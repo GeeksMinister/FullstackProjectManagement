@@ -10,4 +10,5 @@ public interface IEmployeeData
     Task<string> GetPasswordAndSaltHex(string loginInfo);
     Task<Employee> GetEmployeeByEmailOrId(string loginInfo);
     Task<Employee> GetAllInfo(string id);
+    Task<bool> CheckEmployee(string id);
 }

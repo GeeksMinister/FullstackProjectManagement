@@ -19,8 +19,12 @@ public static class Api_Employee
     {
         try
         {
+            if (id.Length is not 36) return Results.BadRequest("Invalid id");
+            if (await employeeData.CheckEmployee(id) == false) return Results.NotFound("No Employee Was Retrieved From Database");
+
             var result = await employeeData.GetAllInfo(id);
-            if (result == null) return Results.NotFound();
+            if (result == null) return Results.NotFound("No registered task was found for the requested employee");
+
             return Results.Ok(result);
         }
         catch (Exception ex)

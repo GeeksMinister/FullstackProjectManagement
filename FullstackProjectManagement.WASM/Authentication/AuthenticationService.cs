@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Net.Http.Json;
 
 namespace FullstackProjectManagement.WASM.Authentication;
 
@@ -22,15 +23,8 @@ public class AuthenticationService : IAuthenticationService
 
 	public async Task<AuthenticatedUserModel?> Login(AuthenticationUserModel user)
 	{
-		var jsonValues = new Dictionary<string, string>()
-		{
-			{"loginInfo", user.LoginInfo }, {"password", user.Password}
-		};
-		var jsonString = JsonConvert.SerializeObject(jsonValues);
-		StringContent httpContentData = new StringContent(jsonString, Encoding.UTF8, "application/json");
-
 		string location = _config["ApiLocation"]! + "/Login";
-		var authResult = await _client.PostAsync(location, httpContentData);
+		var authResult = await _client.PostAsJsonAsync(location, user);
 		var resultContent = await authResult.Content.ReadAsStringAsync();
 
 		if (authResult.IsSuccessStatusCode == false)
@@ -53,3 +47,4 @@ public class AuthenticationService : IAuthenticationService
 		((AuthStateProvider)_stateProvider).NotifyUserLogout();
 	}
 }
+

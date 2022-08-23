@@ -31,8 +31,9 @@ public class EmployeeData : IEmployeeData
             temp_todos.Add(todo);
             return emp;
         }, new { Id = id });
-
-        var employe = result.FirstOrDefault();
+        
+        var employe = result?.FirstOrDefault();
+        if (employe is null) return null!;
         employe!.Todos = temp_todos;
         return employe;
     }
@@ -49,6 +50,13 @@ public class EmployeeData : IEmployeeData
                        "FROM Employee WHERE Id = @Id";
         var result = await _dbContext.LoadData<Employee, object>(query, new { Id = id });
         return result.FirstOrDefault()!;
+    }
+
+    public async Task<bool> CheckEmployee(string id)
+    {
+        string query = "SELECT TRUE FROM Employee WHERE Id = @Id";
+        var result = await _dbContext.LoadData<bool, object>(query, new {Id = id});
+        return result.FirstOrDefault();
     }
 
     public async Task<Employee> GetEmployeeByEmailOrId(string loginInfo)
