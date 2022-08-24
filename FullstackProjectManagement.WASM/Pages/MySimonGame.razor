@@ -1,74 +1,63 @@
 ﻿@page "/MySimonGame"
 
-<h3>Simon</h3>
-
 <div class="row">
-    <div class="controls">
-        <button class="btn simon red  @(IsLit[(int)Button.Red] ? "lit" : "")" @onclick="() => { TryPress(Button.Red); }"></button>
-        <button class="btn simon green  @(IsLit[(int)Button.Green] ? "lit" : "")" @onclick="() => { TryPress(Button.Green); }"></button>
-        <button class="btn simon blue  @(IsLit[(int)Button.Blue] ? "lit" : "")" @onclick="() => { TryPress(Button.Blue); }"></button>
-        <button class="btn simon yellow @(IsLit[(int)Button.Yellow] ? "lit" : "")" @onclick="() => { TryPress(Button.Yellow); }"></button>
+    <h2 class="text-primary m-1 p-2 text-opacity-75 fw-bold">Simon</h2>
+    <h4 class="text-warning text-end pe-3 @(Started ? "visible" : "invisible")">Started !</h4>
+</div>
+<br />
+<div class="form-check">
+
+    <div class="row mb-5 w-100 justify-content-evenly">
+
+        <div class="col-sm-auto col-lg-2 m-2 ">
+            <button class="w-100  p-5 btn btn-danger fw-bold red @(IsLit[(int)Button.Red] ? "lit" : "")" @onclick="() => { TryPress(Button.Red); }">1</button>
+        </div>
+        <div class="col-sm-auto col-lg-2 m-2 ">
+            <button class="w-100 p-5 btn btn-success fw-bold green @(IsLit[(int)Button.Green] ? "lit" : "")" @onclick="() => { TryPress(Button.Green); }">2</button>
+        </div>
+        <div class="col-sm-auto col-lg-2 m-2 ">
+            <button class="w-100 p-5 btn btn-primary fw-bold  blue @(IsLit[(int)Button.Blue] ? "lit" : "")" @onclick="() => { TryPress(Button.Blue); }">3</button>
+        </div>
+        <div class="col-sm-auto col-lg-2 m-2 ">
+            <button class="w-100 p-5 btn btn-warning fw-bold text-light yellow @(IsLit[(int)Button.Yellow] ? "lit" : "")" @onclick="() => { TryPress(Button.Yellow); }">4</button>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+
+<div class="container">
+    <div class="row justify-content-center p-5">
+        <button class="col-sm-auto col-lg-4 p-3 m-2 btn btn-dark btn-outline-light  rounded-pill border-dark border-3" @onclick="StartNewGame">Start New Game</button>
+    </div>
+    <div class="row" style="display:@(GameOver ? "block" : "none")">
+        Game Over! Press "Start New Game" to play again.
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <div class="row m-3  w-auto">
+        <strong class="text-success h5"> High Score: @HighScore</strong>
     </div>
 </div>
 
-<div class="row">
-    <button class="btn btn-primary" @onclick="StartNewGame">Start New Game</button>
-</div>
-<div class="row" style="display:@(GameOver ? "block" : "none")">
-    Game Over! Press "Start New Game" to play again.
-</div>
-<div class="row">
-    High Score: @HighScore
-</div>
-
-
 <style>
-
-    .controls {
-        margin-top: 1rem;
+    .red.lit {
+        background-color: hsl(0, 13%, 71%);
     }
 
-    .controls button {
-        margin-right: .5rem;
-        margin-bottom: .5rem;
+    .green.lit {
+        background-color: hsl(128, 88%, 82%);
     }
 
-    .simon {
-        width: 4rem;
-        height: 4rem;
+    .blue.lit {
+        background-color: hsl(212, 78%, 75%);
     }
 
-        .simon.red {
-            background-color: darkred;
-        }
-
-        .simon.green {
-            background-color: darkgreen;
-        }
-
-        .simon.blue {
-            background-color: darkblue;
-        }
-
-        .simon.yellow {
-            background-color: darkgoldenrod;
-        }
-
-        .simon.red.lit {
-            background-color: lightcoral;
-        }
-
-        .simon.green.lit {
-            background-color: lightgreen;
-        }
-
-        .simon.blue.lit {
-            background-color: lightblue;
-        }
-
-        .simon.yellow.lit {
-            background-color: lightgoldenrodyellow;
-        }
+    .yellow.lit {
+        background-color: hsl(50, 36%, 83%);
+    }
 </style>
 
 @code
@@ -112,6 +101,7 @@
         if (pattern[Index] != button)
         {
             GameOver = true;
+            Started = false;
         }
         else
         {
