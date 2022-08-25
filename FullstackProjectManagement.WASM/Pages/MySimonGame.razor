@@ -10,16 +10,28 @@
     <div class="row mb-5 w-100 justify-content-evenly">
 
         <div class="col-sm-auto col-lg-2 m-2 ">
-            <button class="w-100  p-5 btn btn-danger fw-bold red @(IsLit[(int)Button.Red] ? "lit" : "")" @onclick="() => { TryPress(Button.Red); }">1</button>
+            <button class="w-100  p-5 btn btn-danger fw-bold red @(IsLit[(int)Button.Red] ? "lit" : "")"
+                    @onclick="() => { TryPress(Button.Red); }">
+                1
+            </button>
         </div>
         <div class="col-sm-auto col-lg-2 m-2 ">
-            <button class="w-100 p-5 btn btn-success fw-bold green @(IsLit[(int)Button.Green] ? "lit" : "")" @onclick="() => { TryPress(Button.Green); }">2</button>
+            <button class="w-100 p-5 btn btn-success fw-bold green @(IsLit[(int)Button.Green] ? "lit" : "")"
+                    @onclick="() => { TryPress(Button.Green); }">
+                2
+            </button>
         </div>
         <div class="col-sm-auto col-lg-2 m-2 ">
-            <button class="w-100 p-5 btn btn-primary fw-bold blue @(IsLit[(int)Button.Blue] ? "lit" : "")" @onclick="() => { TryPress(Button.Blue); }">3</button>
+            <button class="w-100 p-5 btn btn-primary fw-bold blue @(IsLit[(int)Button.Blue] ? "lit" : "")"
+                    @onclick="() => { TryPress(Button.Blue); }">
+                3
+            </button>
         </div>
         <div class="col-sm-auto col-lg-2 m-2 ">
-            <button class="w-100 p-5 btn btn-warning fw-bold text-light yellow @(IsLit[(int)Button.Yellow] ? "lit" : "")" @onclick="() => { TryPress(Button.Yellow); }">4</button>
+            <button class="w-100 p-5 btn btn-warning fw-bold text-light yellow @(IsLit[(int)Button.Yellow] ? "lit" : "")"
+                    @onclick="() => { TryPress(Button.Yellow); }">
+                4
+            </button>
         </div>
     </div>
 </div>
@@ -28,14 +40,20 @@
 
 <div class="container">
     <div class="row justify-content-center p-5">
-        <button class="col-sm-auto col-lg-4 p-3 m-2 btn btn-dark btn-outline-light  rounded-pill border-dark border-3" @onclick="StartNewGame">Start New Game</button>
+        <button class="col-sm-auto col-lg-4 p-3 m-2 btn btn-dark btn-outline-light  rounded-pill border-dark border-3"
+                @onclick="StartNewGame">
+            Start New Game
+        </button>
     </div>
 
     <br />
     <br />
     <br />
-    <div class="row text-center @(Started ? "invisible" : "visible")">
-        <strong class="text-danger h5 ">•&nbsp; Game Over &nbsp;• <br /><br />  Press "Start New Game" to play again.</strong>
+    <div class="row text-center @(GameOver ? "visible" : "invisible")">
+        <strong class="text-danger h5 ">
+            •&nbsp; Game Over &nbsp;• <br /><br />
+            Press "Start New Game" to play again.
+        </strong>
     </div>
     <br />
     <br />
