@@ -8,11 +8,11 @@
     </div>
 
     <main>
-        <div class="top-row px-4">
+        <div class="top-row px-4 p-5">
             <AuthorizeView>
                 <Authorized>
                     Welcome @context.User.FindFirst(ClaimTypes.Name)!.Value
-                    <span class="btn p-0 m-3 nav-link oi oi-account-logout" @onclick="@(async () => await ExecuteLogout())"> Log Out</span>
+                    <span class="btn p-0 m-3 nav-link oi oi-account-logout fw-bold" @onclick="@(async () => await ExecuteLogout())"> Log Out</span>
                 </Authorized>
                 <NotAuthorized>
                     <Login />

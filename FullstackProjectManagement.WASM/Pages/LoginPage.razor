@@ -1,0 +1,84 @@
+﻿@page "/LoginPage"
+@inject IAuthenticationService AuthService
+@inject NavigationManager NavManager
+
+<style>
+    .login-form, .error-text {
+        visibility: hidden;
+    }
+
+    .oi.oi-person {
+        font-size: 8rem;
+        color:lightsteelblue;
+    }
+
+    .login-page-form {
+        background-color: whitesmoke;
+    }
+</style>
+
+
+<EditForm Model="@loginModel" OnValidSubmit="ExecuteLogin">
+
+    <div class="row container mt-5 mb-5 p-2 login-page-form">
+
+        <div class="text-center mt-4 h1 ">
+            <div class="oi oi-person bg-primary bg-opacity-75 rounded-pill"></div>
+        </div>
+
+        <div class="col text-center mt-3 bg-opacity-100 ">
+
+            <div class="col-md-auto col-lg-6 col-xl-5 col-xxl-4 p-4 m-auto">
+                <label for="id" class="visually-hidden">Id</label>
+                <InputText id="id" class="form-control" @bind-Value="loginModel.LoginInfo" placeholder="ID Or Email" />
+            </div>
+
+            <div class="col-md-auto col-lg-6 col-xl-5 col-xxl-4 p-4 m-auto">
+                <label for="password" class="visually-hidden">Password</label>
+                <InputText id="password" type="password" class="form-control" @bind-Value="loginModel.Password" placeholder="Password" />
+            </div>
+
+            <div class="p-4 w-100">
+                <button type="submit" class="btn btn-primary fw-bold bg-opacity-75 p-2 col-sm-4  col-md-4 col-lg-2 ">Log In</button>
+            </div>
+
+        </div>
+        @if (authenticationErrorText is not null)
+        {
+            <div class="text-center">
+                <label for="error" class="visually-hidden">Error Message</label>
+                <em class="text-danger error-text">@authenticationErrorText</em>
+            </div>
+        }
+    </div>
+</EditForm>
+
+@code {
+    private AuthenticationUserModel loginModel = new();
+
+    private string authenticationErrorText = "";
+
+    private async Task ExecuteLogin()
+    {
+        try
+        {
+            AuthenticatedUserModel? result = await AuthService.Login(loginModel);
+
+            if (result is not null)
+            {
+                NavManager.NavigateTo("/");
+            }
+            else
+            {
+                authenticationErrorText = "Please check in your login info and password.";
+            }
+
+        }
+        catch (Exception)
+        {
+            authenticationErrorText = "Faild to contact the server. Check your connection";
+        }
+    }
+
+
+}

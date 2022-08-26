@@ -2,7 +2,7 @@
 
 public static class Api_Todo
 {
-    public static void ConfigureApiEmployeeTasks(this WebApplication app)
+    public static void ConfigureApi_EmployeeTasks(this WebApplication app)
     {
         app.MapGet("/Task", GetAllTasks);
         app.MapGet("/Task/{id}", GetTaskById);

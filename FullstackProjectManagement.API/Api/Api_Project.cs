@@ -2,10 +2,10 @@
 
 public static class Api_Project
 {
-    public static void ConfigureApiProject(this WebApplication app)
+    public static void ConfigureApi_Project(this WebApplication app)
     {
-        app.MapGet("/Project/{id}", GetProjectById);
         app.MapGet("/Project", GetAllProjects);
+        app.MapGet("/Project/{id}", GetProjectById);
         app.MapGet("/Project/Names", GetProjectNames);
         app.MapPost("/Project", InsertProject);
         app.MapPut("/Project", UpdateProject);

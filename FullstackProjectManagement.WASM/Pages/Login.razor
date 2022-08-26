@@ -5,13 +5,7 @@
 
 <EditForm Model="@loginModel" OnValidSubmit="ExecuteLogin">
     <div class="row m-2 login-form">
-        @if (authenticationErrorText is not null)
-        {
-            <div class="col-auto m-2">
-                <label for="error" class="visually-hidden">Error</label>
-                <em class="text-danger">@authenticationErrorText</em>
-            </div>
-        }
+
         <div class="col-auto">
             <label for="id" class="visually-hidden">Id</label>
             <InputText id="id" class="form-control" @bind-Value="loginModel.LoginInfo" placeholder="ID Or Email" />
@@ -26,6 +20,13 @@
             <button type="submit" class="btn btn-success">Log In</button>
         </div>
     </div>
+        @if (authenticationErrorText is not null)
+        {
+            <div class="text-center">
+                <label for="error" class="visually-hidden">Error Message</label>
+                <em class="text-danger error-text">@authenticationErrorText</em>
+            </div>
+        }
 </EditForm>
 
 @code {

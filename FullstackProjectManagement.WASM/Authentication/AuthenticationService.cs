@@ -1,4 +1,6 @@
-﻿namespace FullstackProjectManagement.WASM.Authentication;
+﻿using Newtonsoft.Json;
+
+namespace FullstackProjectManagement.WASM.Authentication;
 
 public class AuthenticationService : IAuthenticationService
 {
@@ -29,7 +31,7 @@ public class AuthenticationService : IAuthenticationService
             return null;
         }
 
-        var authenticatedUser = JsonSerializer.Deserialize<AuthenticatedUserModel>(resultContent);
+        var authenticatedUser = JsonConvert.DeserializeObject<AuthenticatedUserModel>(resultContent);
         await _localStorage.SetItemAsync(_config["authTokenStorageKey"], authenticatedUser!.Access_Token);
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", authenticatedUser.Access_Token);
         ((AuthStateProvider)_stateProvider).NotifyUserAuthentication(authenticatedUser.Access_Token!);

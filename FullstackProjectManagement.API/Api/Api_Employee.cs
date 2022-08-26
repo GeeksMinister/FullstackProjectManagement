@@ -2,17 +2,17 @@
 
 public static class Api_Employee
 {
-    public static void ConfigureApiEmployee(this WebApplication app)
+    public static void ConfigureApi_Employee(this WebApplication app)
     {
-        app.MapPost("/Login", Login);
         app.MapGet("/Employee", GetAllEmployees);
-        app.MapGet("/AllInfo/{id}", GetAllInfo);
+        app.MapGet("/Employee/GetAllInfo/{id}", GetAllInfo);
         app.MapGet("/Employee/{id}", GetEmployeeById);
+        app.MapGet("/ExchangeRates", GetAllCurrencies);
+        app.MapPost("/Login", Login);
         app.MapPost("/Employee", InsertEmployee);
         app.MapPut("/Employee/{id}", UpdateEmployee);
-        app.MapDelete("/Employee", DeleteEmployee);
-        app.MapGet("/ExchangeRates", GetAllCurrencies);
         app.MapPut("/ExchangeRates/{id}", UpdateCurrency);
+        app.MapDelete("/Employee", DeleteEmployee);
     }
 
     private static async Task<IResult> GetAllInfo(string id, IEmployeeData employeeData)

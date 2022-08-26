@@ -1,6 +1,3 @@
-global using FullstackProjectManagement.API.Api;
-
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -57,10 +54,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.ConfigureApiProject();
-app.ConfigureApiEmployee();
-app.ConfigureApiUserStory();
-app.ConfigureApiEmployeeTasks();
+app.ConfigureApi_Project();
+app.ConfigureApi_Employee();
+app.ConfigureApi_UserStory();
+app.ConfigureApi_EmployeeTasks();
 
 app.UseCors("OpenCorsPolicy");
 

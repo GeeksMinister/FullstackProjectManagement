@@ -1,5 +1,6 @@
 ﻿namespace FullstackProjectManagement.WASM.Authentication;
 
+
 public class AuthStateProvider : AuthenticationStateProvider
 {
 	private readonly HttpClient _client;

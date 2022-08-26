@@ -1,5 +1,7 @@
 ﻿@page "/simon"
 
+<PageTitle>Simon</PageTitle>
+
 <h3>Simon</h3>
 <div class="row">
     <div class="source-code-badge">
@@ -16,7 +18,7 @@
         <button class="btn simon red  @(IsLit[(int)Button.Red] ? "lit" : "")" @onclick="() => { TryPress(Button.Red); }"></button>
         <button class="btn simon green  @(IsLit[(int)Button.Green] ? "lit" : "")" @onclick="() => { TryPress(Button.Green); }"></button>
         <button class="btn simon blue  @(IsLit[(int)Button.Blue] ? "lit" : "")" @onclick="() => { TryPress(Button.Blue); }"></button>
-        <button class="btn simon yellow @(IsLit[(int)Button.Yellow] ? "lit" : "")" @onclick="() => { TryPress(Button.Yellow); }"></button>
+        <button class="btn simon yellow  @(IsLit[(int)Button.Yellow] ? "lit" : "")" @onclick="() => { TryPress(Button.Yellow); }"></button>
     </div>
 </div>
 <div class="row">

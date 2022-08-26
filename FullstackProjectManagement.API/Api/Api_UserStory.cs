@@ -2,13 +2,13 @@
 
 public static class Api_UserStory
 {
-    public static void ConfigureApiUserStory(this WebApplication app)
+    public static void ConfigureApi_UserStory(this WebApplication app)
     {
         app.MapGet("/UserStory", GetAllUserStories);
         app.MapGet("/UserStory/{id}", GetUserStoryById);
+        app.MapPost("/UserStory", InsertUserStory);
         app.MapPut("/UserStory", UpdateUserStory);
         app.MapDelete("/UserStory", DeleteUserStory);
-        app.MapPost("/UserStory", InsertUserStory);
     }
 
     private static async Task<IResult> GetAllUserStories(IUserStoryData data, HttpContext context)
