@@ -4,10 +4,10 @@
 <PageTitle>Tasks</PageTitle>
 
 <div class="row text-end m-1">
-    <a href="@($"/EmployeeDetails/{Id}")" class="btn btn-primary fw-bold col-sm-2 col-md-2 col-l-1">Back</a>
+    <a href="@($"/EmployeeDetails/{Id}")" class="btn btn-primary fw-bold col-auto col-md-4 col-lg-3">Back</a>
 </div>
 
-<div class="container-fluid p-3">
+<div class="container-fluid p-0 m-0 overflow-auto ">
     @if (tasks?.Any() == false)
     {
         <p>No Task Was Found or Returned From Database</p>
@@ -17,13 +17,13 @@
     <div class="row pt-4">
         <h4 class="text-primary fw-light col-6">Tasks to do <span class="small">(@tasks?.Count)</span></h4>
         <div class=" text-end">
-            <button class="btn btn-success   fw-bold" @onclick="@(async () => await LoadTasks())">Refresh</button>
+            <button class="btn btn-success fw-bold" @onclick="@(async () => await LoadTasks())">Refresh</button>
         </div>
     </div>
     <br />
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
-                <tr class="border-5">
+                <tr class="border-1 border-dark">
                     <th class="text-center">Task</th>
                     <th class="text-center">Description</th>
                     <th class="text-center">Priority</th>
@@ -34,7 +34,7 @@
             <tbody>
                 @foreach (var task in tasks!)
                 {
-                    <tr class="border-5">
+                    <tr class="border-1 border-secondary">
                         <td class="col-2 align-middle text-lg-center fw-bold">@task.TaskName</td>
                         <td class="col-4 text-sm-center align-middle">@task.Description</td>
                         <td class="col-1 text-sm-center align-middle">@task.Priority</td>
