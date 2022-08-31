@@ -3,6 +3,14 @@
 
 <PageTitle>Employees</PageTitle>
 
+<div class="row pt-4">
+    <h4 class="text-primary fw-light col-6">Registered Employees <span class="small">(@employees?.Count)</span></h4>
+    <div class=" text-end">
+        <a href="Addemployee" class="btn btn-success mb-3 fw-bold">Assgin Employee</a>
+    </div>
+</div>
+<br />
+
 <div class="container-fluid p-0 m-0  overflow-auto ">
     @if (error is not null)
     {
@@ -18,13 +26,6 @@
     }
     else
     {
-        <div class="row pt-4">
-            <h4 class="text-primary fw-light col-6">Registered Employees <span class="small">(@employees.Count)</span></h4>
-            <div class=" text-end">
-                <a href="Addemployee" class="btn btn-success mb-3 fw-bold">Assgin Employee</a>
-            </div>
-        </div>
-        <br />
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr class="border-1 border-dark">

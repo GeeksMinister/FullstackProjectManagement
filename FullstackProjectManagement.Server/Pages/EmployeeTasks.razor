@@ -6,7 +6,13 @@
 <div class="row text-end m-1">
     <a href="@($"/EmployeeDetails/{Id}")" class="btn btn-primary fw-bold col-auto col-md-4 col-lg-3">Back</a>
 </div>
-
+<div class="row pt-4">
+    <h4 class="text-primary fw-light col-6">Tasks to do <span class="small">(@tasks?.Count)</span></h4>
+    <div class=" text-end">
+        <button class="btn btn-success fw-bold" @onclick="@(async () => await LoadTasks())">Refresh</button>
+    </div>
+</div>
+<br />
 <div class="container-fluid p-0 m-0 overflow-auto ">
     @if (tasks?.Any() == false)
     {
@@ -14,13 +20,6 @@
     }
     else
     {
-    <div class="row pt-4">
-        <h4 class="text-primary fw-light col-6">Tasks to do <span class="small">(@tasks?.Count)</span></h4>
-        <div class=" text-end">
-            <button class="btn btn-success fw-bold" @onclick="@(async () => await LoadTasks())">Refresh</button>
-        </div>
-    </div>
-    <br />
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr class="border-1 border-dark">

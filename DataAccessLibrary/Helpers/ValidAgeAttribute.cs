@@ -1,8 +1,8 @@
 ﻿namespace DataAccessLibrary.Helpers;
 
-public class FromNowAttribute : ValidationAttribute
+public class ValidAgeAttribute : ValidationAttribute
 {
-    public FromNowAttribute() { }
+    public ValidAgeAttribute() { }
 
     public string GetErrorMessage() => "Employee must be between 18 - 100 years old";
 

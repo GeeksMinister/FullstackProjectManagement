@@ -6,23 +6,23 @@
 <AuthorizeView Roles="Employee, Admin, Manager">
     <Authorized>
         <h3>Registered Tasks for @context.User.FindFirst(ClaimTypes.Name)!.Value </h3>
-        <div class="container-fluid p-0 m-0 overflow-auto">
-            @if (tasks is null)
-            {
-                <p>No Task Was Found or Returned From Database</p>
-            }
-            <div class="text-end m-0">
-                <a href="@($"AddTask/{EmployeeId}")" class="btn btn-success fw-bold m-0 me-1  p-3">Add Task</a>
-            </div>
-            @if (tasks?.Any() == true)
-            {
-                <div class="row pt-4">
-                    <h4 class="text-primary fw-light col-6">Tasks to do <span class="small">(@tasks?.Count)</span></h4>
-                </div>
-                <div class=" text-end">
-                    <button class="btn btn-secondary fw-bold" @onclick="@(async () => await LoadTasks())">Refresh</button>
-                </div>
-                <br />
+        @if (tasks is null)
+        {
+            <p>No Task Was Found or Returned From Database</p>
+        }
+        <div class="text-end m-0">
+            <a href="@($"AddTask/{EmployeeId}")" class="btn btn-success fw-bold m-0 me-1  p-3">Add Task</a>
+        </div>
+        <div class="row pt-4">
+            <h4 class="text-primary fw-light col-6">Tasks to do <span class="small">(@tasks?.Count)</span></h4>
+        </div>
+        <div class=" text-end">
+            <button class="btn btn-secondary fw-bold" @onclick="@(async () => await LoadTasks())">Refresh</button>
+        </div>
+        <br />
+        @if (tasks?.Any() == true)
+        {
+            <div class="container-fluid p-0 m-0 overflow-auto">
                 <table class="table table-bordered table-striped">
                     <thead class="table-dark">
                         <tr class="border-1 border-dark">
@@ -53,8 +53,8 @@
                         }
                     </tbody>
                 </table>
-            }
-        </div>
+            </div>
+        }
     </Authorized>
 
     <NotAuthorized>

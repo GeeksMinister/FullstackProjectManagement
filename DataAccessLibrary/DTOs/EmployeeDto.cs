@@ -11,7 +11,7 @@ public class EmployeeDto
     public string LastName { get; set; } = string.Empty;
 
     [Required]
-    [FromNow]
+    [ValidAge]
     public DateTime Birthdate { get; set; }
     
     [StringLength(20)]
