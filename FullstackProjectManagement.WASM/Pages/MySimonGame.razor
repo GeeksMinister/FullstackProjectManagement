@@ -3,12 +3,16 @@
 <PageTitle>Simon</PageTitle>
 
 <div class="row">
-    <h2 class="text-primary p-3 fw-bold ">Simon</h2>
-    <h3 class="text-warning text-end p-3 text-center  @(Started ? "visible" : "invisible")">Game's On</h3>
+    <h2 class="text-primary p-1 fw-bold ">Simon</h2>
+    <h3 class="text-warning text-end p-1 text-center @(Started ? "visible" : "invisible")">Game's On</h3>
+    <strong class="text-danger p-0 mb-2 mt-0  h5 text-center @(GameOver ? "visible" : "invisible")">
+        •&nbsp; Game Over &nbsp;• <br /><br />
+        Press "Start New Game" to play again.
+    </strong>
 </div>
 <br />
-<div class="form-check">
 
+<div class="form-check">
     <div class="row mb-5 w-100 justify-content-evenly">
 
         <div class="col-sm-auto col-lg-2 m-2 ">
@@ -49,12 +53,7 @@
     </div>
 
     <br />
-    <div class="row text-center @(GameOver ? "visible" : "invisible")">
-        <strong class="text-danger h5 ">
-            •&nbsp; Game Over &nbsp;• <br /><br />
-            Press "Start New Game" to play again.
-        </strong>
-    </div>
+
     <br />
     <div class="row m-3  w-auto">
         <strong class="text-success h5 "> High Score: @HighScore</strong>
