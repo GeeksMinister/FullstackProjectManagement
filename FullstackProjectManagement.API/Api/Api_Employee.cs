@@ -1,4 +1,7 @@
-﻿namespace FullstackProjectManagement.API.Api;
+﻿using static Dapper.SqlMapper;
+using System.Security.Claims;
+
+namespace FullstackProjectManagement.API.Api;
 
 public static class Api_Employee
 {
@@ -228,6 +231,31 @@ public static class Api_Employee
             expires: DateTime.Now.AddDays(1));
 
         return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+    private static string CreateToken2(Employee employee, IConfiguration config)
+    {
+        var claimsIdentity = new ClaimsIdentity(new Claim[]
+        {
+            new Claim(type: JwtRegisteredClaimNames.Sub, employee.FirstName),
+            new Claim(type: JwtRegisteredClaimNames.Email, employee.Email)
+        });
+
+        var key = "f5422e6cdfde4af3bf631c7dd1f80b97";
+        var encodedKey = Encoding.ASCII.GetBytes(key);
+        var tokenDescriptor = new SecurityTokenDescriptor()
+        {
+            Subject = claimsIdentity,
+            Expires = DateTime.Now.AddHours(2),
+            Audience = "Postman",
+            Issuer = "Codewrinkles",
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(encodedKey),
+                SecurityAlgorithms.HmacSha256Signature)
+        };
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var jwt = tokenHandler.WriteToken(token);
+                return jwt;
     }
 
 }
