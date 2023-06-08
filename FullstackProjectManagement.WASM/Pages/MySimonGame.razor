@@ -4,59 +4,57 @@
 
 <div class="row">
     <h2 class="display-4 text-primary p-1">Simon</h2>
-    <h3 class="text-warning text-end p-1  text-center @(Started ? "visible" : "invisible")">Game's On</h3>
-    <strong class="text-danger p-0 mb-2 mt-0  h5 text-center @(GameOver ? "visible" : "invisible")">
-        •&nbsp; Game Over &nbsp;• <br /><br />
-        Press "Start New Game" to play again.
-    </strong>
-</div>
-<br />
-
-<div class="form-check">
-    <div class="row mb-5 w-100 justify-content-evenly">
-
-        <div class="col-4 col-md-3 col-lg-2 m-2 box">
-            <button class="w-100 p-5 btn btn-danger fw-bold red shadow-lg @(IsLit[(int)Button.Red] ? "lit" : "")"
-                    @onclick="() => { TryPress(Button.Red); }">
-                1
-            </button>
-        </div>
-        <div class="col-4 col-md-3 col-lg-2 m-2 box">
-            <button class="w-100 p-5 btn btn-success fw-bold green shadow-lg @(IsLit[(int)Button.Green] ? "lit" : "")"
-                    @onclick="() => { TryPress(Button.Green); }">
-                2
-            </button>
-        </div>
-        <div class="col-4 col-md-3 col-lg-2 m-2 box">
-            <button class="w-100 p-5 btn btn-primary fw-bold blue shadow-lg @(IsLit[(int)Button.Blue] ? "lit" : "")"
-                    @onclick="() => { TryPress(Button.Blue); }">
-                3
-            </button>
-        </div>
-        <div class="col-4 col-md-3 col-lg-2 m-2 box">
-            <button class="w-100 p-5 btn btn-warning fw-bold text-light yellow shadow-lg @(IsLit[(int)Button.Yellow] ? "lit" : "")"
-                    @onclick="() => { TryPress(Button.Yellow); }">
-                4
-            </button>
-        </div>
+    <div class="game-status">
+        <h3 class="text-end p-1  text-center @(Started ? "d-block" : "d-none")">Game's On</h3>
+        <strong class="text-danger p-0 mb-2 mt-0  h5 text-center @(GameOver ? "d-block" : "d-none")">
+            •&nbsp; Game Over &nbsp;• <br /><br />
+            Press "Start New Game" to play again.
+        </strong>
     </div>
 </div>
 <br />
-<br />
 
-<div class="container">
-    <div class="row justify-content-center p-5">
-        <button class="col-8 col-lg-4 p-3 m-2 btn btn-dark btn-outline-light shadow-lg rounded-pill border-dark border-3"
-                @onclick="StartNewGame">
-            Start New Game
-        </button>
+<div class="game-body">
+    <div class="form-check">
+        <div class="row w-100 justify-content-evenly">
+
+            <div class="col-4 col-md-3 col-lg-2 m-2 box">
+                <button class="w-100 p-5 btn btn-danger fw-bold red shadow-lg @(IsLit[(int)Button.Red] ? "lit" : "")"
+                @onclick="() => { TryPress(Button.Red); }">
+                    1
+                </button>
+            </div>
+            <div class="col-4 col-md-3 col-lg-2 m-2 box">
+                <button class="w-100 p-5 btn btn-success fw-bold green shadow-lg @(IsLit[(int)Button.Green] ? "lit" : "")"
+                @onclick="() => { TryPress(Button.Green); }">
+                    2
+                </button>
+            </div>
+            <div class="col-4 col-md-3 col-lg-2 m-2 box">
+                <button class="w-100 p-5 btn btn-primary fw-bold blue shadow-lg @(IsLit[(int)Button.Blue] ? "lit" : "")"
+                @onclick="() => { TryPress(Button.Blue); }">
+                    3
+                </button>
+            </div>
+            <div class="col-4 col-md-3 col-lg-2 m-2 box">
+                <button class="w-100 p-5 btn btn-warning fw-bold text-light yellow shadow-lg @(IsLit[(int)Button.Yellow] ? "lit" : "")"
+                @onclick="() => { TryPress(Button.Yellow); }">
+                    4
+                </button>
+            </div>
+        </div>
     </div>
+    <div class="container">
+        <div class="row justify-content-center p-4">
+            <button class="col-7 col-lg-4 p-2 m-2 btn btn-dark btn-outline-light shadow-lg rounded-pill border-dark border-3"
+            @onclick="StartNewGame">
+                Start New Game
+            </button>
+        </div>
 
-    <br />
-
-    <br />
-    <div class="row m-3  w-auto">
-        <strong class="text-success h5 "> High Score: @HighScore</strong>
+        <div class="score">
+            <strong class="text-success"> Highest Score: <span class="text-primary">@HighScore</span></strong>
+        </div>
     </div>
 </div>
 
@@ -84,7 +82,32 @@
     .box {
         max-width: 12rem !important;
     }
+
+    h2 {
+        font-size: calc(1.1rem + 2.7vw);
+        font-weight: 600;
+    }
+
+    .game-status {
+        height: 72px;
+    }
+
+        .game-status h3 {
+            color: #ffc107;
+        }
+
+    .score {
+        position: relative;
+        left: -23px;
+        font-size: 1.095rem;
+    }
+
+    div.box button {
+        display: flex;
+        justify-content: center;
+    }
 </style>
+
 
 @code
 {

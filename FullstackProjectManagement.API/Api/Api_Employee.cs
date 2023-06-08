@@ -228,10 +228,24 @@ public static class Api_Employee
         var token = new JwtSecurityToken(
             claims: claims,
             signingCredentials: creds,
+            issuer: "FPM",
+            audience: "FPM-WASM",
+            
             expires: DateTime.Now.AddDays(1));
+            
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+    
+    //// Generate a new RSA key pair
+    //RSA rsa = RSA.Create();
+
+    //// Export the private key to a file
+    //File.WriteAllText("private.pem", rsa.ToXmlString(true));
+
+    //// Export the public key to a file
+    //File.WriteAllText("public.pem", rsa.ToXmlString(false));
+
     private static string CreateToken2(Employee employee, IConfiguration config)
     {
         var claimsIdentity = new ClaimsIdentity(new Claim[]
